@@ -7,7 +7,7 @@
   "scripts": {
     "setup-project": "npm i && cd client && npm i",
     "setup-production-app": "npm i && cd client && npm i && npm run build",
-    "server": "nodemon index"
+    "server": "node index"
   },
   "author": "Manas Nikte",
   "license": "ISC",
