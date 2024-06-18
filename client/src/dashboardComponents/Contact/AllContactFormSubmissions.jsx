@@ -7,7 +7,7 @@ const AllContactFormSubmissions = () => {
   useEffect(() => {
     const fetchSubmissions = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/submissions');
+        const response = await axios.get('https://witjabtechnologiescombo.onrender.com/api/submissions');
         setSubmissions(response.data);
       } catch (error) {
         console.error('Error fetching submissions:', error);
