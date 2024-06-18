@@ -19,9 +19,8 @@ app.use(express.json());
 
 // Serve static files from the 'uploads' directory
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
-// Serve static files from the React app's build directory
-app.use(express.static(path.join(__dirname, 'client', 'build')));
+// Serve static files from the Vite build directory
+app.use(express.static(path.join(__dirname, 'client', 'dist')));
 
 mongoose.connect(process.env.MONGO_URL, {
 }).then(() => {
@@ -34,7 +33,7 @@ app.use('/api', route);
 
 // Catch-all handler to serve the React app's index.html file for any unknown routes
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
 });
 
 const PORT = process.env.PORT || 8000;
