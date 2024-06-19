@@ -65,7 +65,7 @@ const AllPortfolioItems = () => {
                         onClick={() => handleEditClick(item._id)}
                         className="bg-yellow-600 text-white px-4 py-2 rounded"
                       >
-                        Edit
+                        Action
                       </button>
                     </td>
                   </tr>

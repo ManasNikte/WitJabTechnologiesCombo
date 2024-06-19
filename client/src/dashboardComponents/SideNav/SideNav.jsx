@@ -17,6 +17,7 @@ const SideNav = () => {
       </button>
       <div className="mb-8">
         <h2 className={`text-xl font-bold text-center mb-4 ${isCollapsed ? 'hidden' : 'block'}`}>Admin Panel</h2>
+        <hr className="border-t border-gray-700 mb-4" />
         <ul>
           <li className="mb-4">
             <Link to="/dashboard" className="flex items-center py-2 px-4 rounded hover:bg-gray-700">
