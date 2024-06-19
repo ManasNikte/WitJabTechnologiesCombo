@@ -16,7 +16,7 @@ export const newContactSubmission = async (req, res) => {
 };
 
 
-export const getContactSubmissions = async (req, res) => {
+export const getAllContacts = async (req, res) => {
     try {
       const { page = 1, limit = 7 } = req.query;
       const skip = (page - 1) * limit;
