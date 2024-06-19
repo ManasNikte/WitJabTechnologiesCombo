@@ -5,16 +5,17 @@ import { useParams, useNavigate } from 'react-router-dom';
 const EditPortfolioItem = () => {
   const token = localStorage.getItem('token');
   const { id } = useParams();
-  const navigate = useNavigate(); // useNavigate hook for navigation
+  const navigate = useNavigate();
+
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [image, setImage] = useState('');
-  const [visibility, setVisibility] = useState('');
-  const [file, setFile] = useState(null); // To track file changes
+  const [visibility, setVisibility] = useState('public');
+  const [file, setFile] = useState(null);
   const [date, setDate] = useState('');
   const [status, setStatus] = useState('');
   const [colorful, setColorful] = useState(false);
-  const [weburl, setWeburl] = useState(''); // Added weburl state
+  const [weburl, setWeburl] = useState('');
 
   useEffect(() => {
     const fetchItem = async () => {
@@ -23,11 +24,11 @@ const EditPortfolioItem = () => {
         setTitle(response.data.title);
         setDescription(response.data.text);
         setImage(response.data.file);
-        setWeburl(response.data.weburl); // Set weburl from API response
-        setVisibility(response.data.visibility);
-        setDate(response.data.date || ''); // Assuming date is returned from backend
-        setStatus(response.data.status || ''); // Assuming status is returned from backend
-        setColorful(response.data.colorful || false); // Assuming colorful is returned from backend
+        setWeburl(response.data.weburl || ''); // Set weburl from API response
+        setVisibility(response.data.visibility || 'public');
+        setDate(response.data.date || '');
+        setStatus(response.data.status || '');
+        setColorful(response.data.colorful || false);
       } catch (error) {
         console.error('Error fetching portfolio item:', error);
       }
@@ -37,7 +38,7 @@ const EditPortfolioItem = () => {
   }, [id]);
 
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]); // Update the 'file' state with the selected file
+    setFile(e.target.files[0]);
   };
 
   const handleChange = (e) => {
@@ -52,7 +53,7 @@ const EditPortfolioItem = () => {
           setDate(value);
         } else if (name === 'status') {
           setStatus(value);
-        } else if (name === 'weburl') { // Handle weburl change
+        } else if (name === 'weburl') {
           setWeburl(value);
         }
         break;
@@ -64,14 +65,14 @@ const EditPortfolioItem = () => {
     try {
       const formData = new FormData();
       formData.append('title', title);
-      formData.append('text', description); // Changed to 'text' to match backend
+      formData.append('text', description);
       formData.append('date', date);
-      formData.append('weburl', weburl); // Append weburl to formData
+      formData.append('weburl', weburl);
       formData.append('status', status);
       formData.append('visibility', visibility);
       formData.append('colorful', colorful);
       if (file) {
-        formData.append('file', file); // Append the new file if it's selected
+        formData.append('file', file);
       }
 
       await axios.put(`https://witjabtechnologiescombo.onrender.com/api/updateportfolio/${id}`, formData, {
@@ -80,8 +81,8 @@ const EditPortfolioItem = () => {
           'Content-Type': 'multipart/form-data',
         },
       });
-      // Redirect or show success message
-      navigate('/dashboard/portfolio'); // Redirect to dashboard or another appropriate route
+
+      navigate('/dashboard/portfolio');
     } catch (error) {
       console.error('Error updating portfolio item:', error);
     }
@@ -94,8 +95,8 @@ const EditPortfolioItem = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      // Redirect to portfolio list or show success message
-      navigate('/dashboard/portfolio'); // Redirect to dashboard or another appropriate route
+
+      navigate('/dashboard/portfolio');
     } catch (error) {
       console.error('Error deleting portfolio item:', error);
     }
@@ -108,7 +109,7 @@ const EditPortfolioItem = () => {
         <img
           src={image}
           alt={title}
-          className="max-w-full max-h-96 mx-auto border border-gray-700"
+          className="w-full max-h-96 mx-auto object-cover border border-gray-700"
         />
       </div>
       <form onSubmit={handleSubmit} className="mb-4">
@@ -134,34 +135,37 @@ const EditPortfolioItem = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-white mb-2">Date</label>
+          <label className="block text-gray-700 mb-2" htmlFor="date">Date</label>
           <input
             type="text"
+            id="date"
             name="date"
             value={date}
             onChange={handleChange}
-            className="bg-gray-800 text-white border border-gray-700 rounded py-2 px-4 w-full"
+            className="w-full p-2 border rounded"
             required
           />
         </div>
         <div className="mb-4">
-          <label className="block text-white mb-2">Web URL</label>
+          <label className="block text-gray-700 mb-2" htmlFor="weburl">Web URL</label>
           <input
             type="text"
+            id="weburl"
             name="weburl"
             value={weburl}
             onChange={handleChange}
-            className="bg-gray-800 text-white border border-gray-700 rounded py-2 px-4 w-full"
+            className="w-full p-2 border rounded"
             required
           />
         </div>
         <div className="mb-4">
-          <label className="block text-white mb-2">Status</label>
+          <label className="block text-gray-700 mb-2" htmlFor="status">Status</label>
           <select
+            id="status"
             name="status"
             value={status}
             onChange={handleChange}
-            className="bg-gray-800 text-white border border-gray-700 rounded py-2 px-4 w-full"
+            className="w-full p-2 border rounded"
             required
           >
             <option value="">Select Status</option>
@@ -170,8 +174,9 @@ const EditPortfolioItem = () => {
           </select>
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 mb-2">Visibility</label>
+          <label className="block text-gray-700 mb-2" htmlFor="visibility">Visibility</label>
           <select
+            id="visibility"
             className="w-full p-2 border rounded"
             value={visibility}
             onChange={(e) => setVisibility(e.target.value)}
@@ -182,23 +187,24 @@ const EditPortfolioItem = () => {
           </select>
         </div>
         <div className="mb-4">
-          <label className="block text-gray-700 mb-2" htmlFor="image">Update Image</label>
+          <label className="block text-gray-700 mb-2" htmlFor="file">Update Image</label>
           <input
-            className="w-full p-2 border rounded"
             type="file"
-            id="image"
+            id="file"
             accept="image/*"
-            onChange={handleFileChange} // Handle file change to update state
+            onChange={handleFileChange}
+            className="w-full p-2 border rounded"
           />
         </div>
         <div className="mb-4">
-          <label className="block text-white mb-2">Colorful</label>
+          <label className="block text-gray-700 mb-2" htmlFor="colorful">Colorful</label>
           <input
             type="checkbox"
+            id="colorful"
             name="colorful"
             checked={colorful}
             onChange={handleChange}
-            className="bg-gray-800 text-white border border-gray-700 rounded py-2 px-4"
+            className="p-2"
           />
         </div>
         <button className="w-full bg-blue-500 text-white p-2 rounded mb-2" type="submit">Update Item</button>

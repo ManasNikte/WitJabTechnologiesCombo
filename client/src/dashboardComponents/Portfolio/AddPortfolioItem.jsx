@@ -8,6 +8,7 @@ const AddPortfolioItem = () => {
     title: '',
     text: '',
     date: '',
+    weburl: '',
     status: '',
     colorful: false,
     file: null
@@ -74,7 +75,7 @@ const AddPortfolioItem = () => {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold text-white mb-4">Add New Portfolio Item</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="max-w-lg mx-auto">
         <div className="mb-4">
           <label className="block text-white mb-2">Title</label>
           <input
@@ -153,7 +154,7 @@ const AddPortfolioItem = () => {
             className="bg-gray-800 text-white border border-gray-700 rounded py-2 px-4"
           />
         </div>
-        <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded">
+        <button type="submit" className="bg-blue-500 text-white py-2 px-4 rounded w-full">
           Add Portfolio Item
         </button>
       </form>
