@@ -6,7 +6,7 @@ const sendEmailNotification = async (name, email, subject, message) => {
   try {
     // Create reusable transporter object using the default SMTP transport
     let transporter = nodemailer.createTransport({
-      host: 'smtp.irrecordings.com',
+      host: 'smtp.hostinger.com',
       port: 587,
       secure: false, // true for 465, false for other ports
       auth: {
