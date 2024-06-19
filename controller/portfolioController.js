@@ -67,7 +67,7 @@ export const updatePortfolioItem = async (req, res) => {
 
     // Proceed with updating the portfolio item
     if (req.file) {
-      file = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+      file = `https://${req.get('host')}/uploads/${req.file.filename}`;
     }
 
     const updatedData = await Portfolio.findByIdAndUpdate(req.params.id, {
