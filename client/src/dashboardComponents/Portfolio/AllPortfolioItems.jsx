@@ -13,7 +13,7 @@ const AllPortfolioItems = () => {
   useEffect(() => {
     const fetchItems = async () => {
       try {
-        const response = await axios.get('http://localhost:8000/api/getallportfolio');
+        const response = await axios.get('https://witjabtechnologiescombo.onrender.com/api/getallportfolio');
         setPortfolioItems(response.data);
       } catch (error) {
         console.error('Error fetching portfolio items:', error);

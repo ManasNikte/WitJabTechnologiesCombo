@@ -74,7 +74,7 @@ const EditPortfolioItem = () => {
         formData.append('file', file); // Append the new file if it's selected
       }
 
-      await axios.put(`http://localhost:8000/api/updateportfolio/${id}`, formData, {
+      await axios.put(`https://witjabtechnologiescombo.onrender.com/api/updateportfolio/${id}`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',
@@ -89,7 +89,7 @@ const EditPortfolioItem = () => {
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`http://localhost:8000/api/deleteportfolio/${id}`, {
+      await axios.delete(`https://witjabtechnologiescombo.onrender.com/api/deleteportfolio/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
