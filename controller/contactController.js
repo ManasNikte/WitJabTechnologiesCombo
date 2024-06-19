@@ -1,5 +1,5 @@
-const nodemailer = require('nodemailer');
-const Contact = require('../models/Contact'); // Assuming Contact model is defined
+import nodemailer from 'nodemailer';
+import Contact from '../models/Contact'; // Assuming Contact model is defined
 
 // Function to send email notification
 const sendEmailNotification = async (name, email, subject, message) => {
@@ -61,7 +61,6 @@ export const newContactSubmission = async (req, res) => {
     res.status(500).json({ msg: 'Server error', error: error.message });
   }
 };
-
 
 
 export const getAllContacts = async (req, res) => {
