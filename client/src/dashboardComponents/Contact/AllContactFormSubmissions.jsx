@@ -6,10 +6,20 @@ const AllContactFormSubmissions = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const token = localStorage.getItem('token');
+    if (!token) {
+      console.error('No token found in localStorage');
+      return;
+    }
+    
   useEffect(() => {
     const fetchSubmissions = async () => {
       try {
-        const response = await axios.get('https://witjabtechnologiescombo.onrender.com/api/contact');
+        const response = await axios.get('https://witjabtechnologiescombo.onrender.com/api/contact', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        });
         setSubmissions(response.data);
       } catch (error) {
         console.error('Error fetching submissions:', error);
