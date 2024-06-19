@@ -43,6 +43,38 @@ const AllContactFormSubmissions = () => {
     }
   };
 
+  const renderPageNumbers = () => {
+    const pageNumbers = [];
+    for (let i = 1; i <= totalPages; i++) {
+      if (
+        i === 1 ||
+        i === totalPages ||
+        (i >= currentPage - 1 && i <= currentPage + 1)
+      ) {
+        pageNumbers.push(
+          <button
+            key={i}
+            onClick={() => setCurrentPage(i)}
+            className={`px-3 py-1 rounded-md ${
+              i === currentPage
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+            }`}
+          >
+            {i}
+          </button>
+        );
+      } else if (i === currentPage - 2 || i === currentPage + 2) {
+        pageNumbers.push(
+          <span key={i} className="px-3 py-1 text-gray-300">
+            ...
+          </span>
+        );
+      }
+    }
+    return pageNumbers;
+  };
+
   if (loading) {
     return <div className="container mx-auto p-4 text-white">Loading...</div>;
   }
@@ -62,6 +94,7 @@ const AllContactFormSubmissions = () => {
               <th className="py-3 px-4 border-b border-gray-700 text-left">Email</th>
               <th className="py-3 px-4 border-b border-gray-700 text-left">Subject</th>
               <th className="py-3 px-4 border-b border-gray-700 text-left">Message</th>
+              <th className="py-3 px-4 border-b border-gray-700 text-left">Timestamp</th>
             </tr>
           </thead>
           <tbody>
@@ -71,6 +104,7 @@ const AllContactFormSubmissions = () => {
                 <td className="py-3 px-4 border-b border-gray-700">{submission.email}</td>
                 <td className="py-3 px-4 border-b border-gray-700">{submission.subject}</td>
                 <td className="py-3 px-4 border-b border-gray-700">{submission.message}</td>
+                <td className="py-3 px-4 border-b border-gray-700">{new Date(submission.createdAt).toLocaleString()}</td>
               </tr>
             ))}
           </tbody>
@@ -83,6 +117,7 @@ const AllContactFormSubmissions = () => {
           >
             Previous
           </button>
+          <div className="flex space-x-1">{renderPageNumbers()}</div>
           <button
             onClick={handleNextPage}
             disabled={currentPage === totalPages}
