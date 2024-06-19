@@ -5,22 +5,21 @@ const AllContactFormSubmissions = () => {
   const [submissions, setSubmissions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   const token = localStorage.getItem('token');
-    if (!token) {
-      console.error('No token found in localStorage');
-      return;
-    }
-    
+
   useEffect(() => {
-    const fetchSubmissions = async () => {
+    const fetchSubmissions = async (page) => {
       try {
-        const response = await axios.get('https://witjabtechnologiescombo.onrender.com/api/contact', {
+        const response = await axios.get(`https://witjabtechnologiescombo.onrender.com/api/contact?page=${page}&limit=7`, {
           headers: {
             Authorization: `Bearer ${token}`,
-          }
+          },
         });
-        setSubmissions(response.data);
+        setSubmissions(response.data.submissions);
+        setTotalPages(response.data.totalPages);
       } catch (error) {
         console.error('Error fetching submissions:', error);
         setError('Failed to fetch submissions');
@@ -29,8 +28,20 @@ const AllContactFormSubmissions = () => {
       }
     };
 
-    fetchSubmissions();
-  }, []);
+    fetchSubmissions(currentPage);
+  }, [currentPage, token]);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
 
   if (loading) {
     return <div className="container mx-auto p-4 text-white">Loading...</div>;
@@ -64,6 +75,22 @@ const AllContactFormSubmissions = () => {
             ))}
           </tbody>
         </table>
+        <div className="flex justify-between mt-4">
+          <button
+            onClick={handlePrevPage}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 disabled:opacity-50"
+          >
+            Previous
+          </button>
+          <button
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
       </div>
     </div>
   );

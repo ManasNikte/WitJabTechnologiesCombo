@@ -16,12 +16,21 @@ export const newContactSubmission = async (req, res) => {
 };
 
 
-export const getAllContacts = async (req, res) => {
+export const getContactSubmissions = async (req, res) => {
     try {
-      const contacts = await Contact.find();
-      res.status(200).json(contacts);
+      const { page = 1, limit = 7 } = req.query;
+      const skip = (page - 1) * limit;
+  
+      const [submissions, totalSubmissions] = await Promise.all([
+        Contact.find().sort({ createdAt: -1 }).skip(skip).limit(Number(limit)),
+        Contact.countDocuments()
+      ]);
+  
+      const totalPages = Math.ceil(totalSubmissions / limit);
+  
+      res.status(200).json({ submissions, totalPages });
     } catch (error) {
-      console.error('Error fetching contact form submissions:', error);
+      console.error('Error fetching contact submissions:', error);
       res.status(500).json({ msg: 'Server error', error: error.message });
     }
   };
