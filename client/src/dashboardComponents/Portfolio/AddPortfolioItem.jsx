@@ -75,7 +75,7 @@ const AddPortfolioItem = () => {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold text-white mb-4">Add New Portfolio Item</h1>
-      <form onSubmit={handleSubmit} className="max-w-lg mx-auto">
+      <form onSubmit={handleSubmit} className="max-w-lg mx-auto max-h-screen-half overflow-y-auto">
         <div className="mb-4">
           <label className="block text-white mb-2">Title</label>
           <input

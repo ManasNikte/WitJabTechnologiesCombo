@@ -86,29 +86,33 @@ const AllContactFormSubmissions = () => {
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4 text-white">Contact Form Submissions</h1>
-      <div className="overflow-x-auto bg-gray-800 rounded-lg shadow-lg">
-        <table className="min-w-full bg-gray-800 text-white border border-gray-700">
-          <thead className="bg-gray-700">
-            <tr>
-              <th className="py-3 px-4 border-b border-gray-700 text-left">Name</th>
-              <th className="py-3 px-4 border-b border-gray-700 text-left">Email</th>
-              <th className="py-3 px-4 border-b border-gray-700 text-left">Subject</th>
-              <th className="py-3 px-4 border-b border-gray-700 text-left">Message</th>
-              <th className="py-3 px-4 border-b border-gray-700 text-left">Timestamp</th>
-            </tr>
-          </thead>
-          <tbody>
-            {submissions.map((submission) => (
-              <tr key={submission._id} className="hover:bg-gray-700">
-                <td className="py-3 px-4 border-b border-gray-700">{submission.name}</td>
-                <td className="py-3 px-4 border-b border-gray-700">{submission.email}</td>
-                <td className="py-3 px-4 border-b border-gray-700">{submission.subject}</td>
-                <td className="py-3 px-4 border-b border-gray-700">{submission.message}</td>
-                <td className="py-3 px-4 border-b border-gray-700">{new Date(submission.createdAt).toLocaleString()}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="overflow-x-auto">
+        <div className="bg-gray-800 rounded-lg shadow-lg">
+          <div className="max-h-screen-half overflow-y-auto">
+            <table className="min-w-full bg-gray-800 text-white border border-gray-700">
+              <thead className="bg-gray-700">
+                <tr>
+                  <th className="py-3 px-4 border-b border-gray-700 text-left">Name</th>
+                  <th className="py-3 px-4 border-b border-gray-700 text-left">Email</th>
+                  <th className="py-3 px-4 border-b border-gray-700 text-left">Subject</th>
+                  <th className="py-3 px-4 border-b border-gray-700 text-left">Message</th>
+                  <th className="py-3 px-4 border-b border-gray-700 text-left">Timestamp</th>
+                </tr>
+              </thead>
+              <tbody>
+                {submissions.map((submission) => (
+                  <tr key={submission._id} className="hover:bg-gray-700">
+                    <td className="py-3 px-4 border-b border-gray-700">{submission.name}</td>
+                    <td className="py-3 px-4 border-b border-gray-700">{submission.email}</td>
+                    <td className="py-3 px-4 border-b border-gray-700">{submission.subject}</td>
+                    <td className="py-3 px-4 border-b border-gray-700">{submission.message}</td>
+                    <td className="py-3 px-4 border-b border-gray-700">{new Date(submission.createdAt).toLocaleString()}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
         <div className="flex justify-between mt-4">
           <button
             onClick={handlePrevPage}

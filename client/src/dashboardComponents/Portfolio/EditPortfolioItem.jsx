@@ -104,12 +104,12 @@ const EditPortfolioItem = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Edit Portfolio Item</h1>
+      <h1 className="text-2xl font-bold mb-4 text-center">Edit Portfolio Item</h1>
       <div className="mb-4 text-center">
         <img
           src={image}
           alt={title}
-          className="w-full max-h-96 mx-auto object-cover border border-gray-700"
+          className="w-full h-64 object-cover border border-gray-700"
         />
       </div>
       <form onSubmit={handleSubmit} className="mb-4">

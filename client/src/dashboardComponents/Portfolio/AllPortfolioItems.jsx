@@ -33,34 +33,34 @@ const AllPortfolioItems = () => {
         </Link>
       </div>
       <div className="overflow-x-auto">
-        <div className="-mx-4 sm:-mx-8">
-          <div className="inline-block min-w-full sm:overflow-hidden">
+        <div className="bg-gray-800 rounded-lg shadow-lg">
+          <div className="max-h-screen-half overflow-y-auto">
             <table className="min-w-full bg-gray-800 text-white border border-gray-700">
-              <thead>
+              <thead className="bg-gray-700">
                 <tr>
-                  <th className="py-2 px-4 sm:px-6 border-b border-gray-700">Title</th>
-                  <th className="py-2 px-4 sm:px-6 border-b border-gray-700">Description</th>
-                  <th className="py-2 px-4 sm:px-6 border-b border-gray-700">Visibility</th>
-                  <th className="py-2 px-4 sm:px-6 border-b border-gray-700">Date</th>
-                  <th className="py-2 px-4 sm:px-6 border-b border-gray-700">Status</th>
-                  <th className="py-2 px-4 sm:px-6 border-b border-gray-700">Image</th>
-                  <th className="py-2 px-4 sm:px-6 border-b border-gray-700">Colorful</th>
-                  <th className="py-2 px-4 sm:px-6 border-b border-gray-700">Actions</th>
+                  <th className="py-3 px-4 sm:px-6 border-b border-gray-700 text-left">Title</th>
+                  <th className="py-3 px-4 sm:px-6 border-b border-gray-700 text-left">Description</th>
+                  <th className="py-3 px-4 sm:px-6 border-b border-gray-700 text-left">Visibility</th>
+                  <th className="py-3 px-4 sm:px-6 border-b border-gray-700 text-left">Date</th>
+                  <th className="py-3 px-4 sm:px-6 border-b border-gray-700 text-left">Status</th>
+                  <th className="py-3 px-4 sm:px-6 border-b border-gray-700 text-left">Image</th>
+                  <th className="py-3 px-4 sm:px-6 border-b border-gray-700 text-left">Colorful</th>
+                  <th className="py-3 px-4 sm:px-6 border-b border-gray-700 text-left">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {portfolioItems.map((item) => (
                   <tr key={item._id} className="hover:bg-gray-700">
-                    <td className="py-2 px-4 sm:px-6 border-b border-gray-700">{item.title}</td>
-                    <td className="py-2 px-4 sm:px-6 border-b border-gray-700">{item.text}</td>
-                    <td className="py-2 px-4 sm:px-6 border-b border-gray-700">{item.visibility}</td>
-                    <td className="py-2 px-4 sm:px-6 border-b border-gray-700">{item.date}</td>
-                    <td className="py-2 px-4 sm:px-6 border-b border-gray-700">{item.status}</td>
-                    <td className="py-2 px-4 sm:px-6 border-b border-gray-700">
+                    <td className="py-3 px-4 sm:px-6 border-b border-gray-700">{item.title}</td>
+                    <td className="py-3 px-4 sm:px-6 border-b border-gray-700">{item.text}</td>
+                    <td className="py-3 px-4 sm:px-6 border-b border-gray-700">{item.visibility}</td>
+                    <td className="py-3 px-4 sm:px-6 border-b border-gray-700">{item.date}</td>
+                    <td className="py-3 px-4 sm:px-6 border-b border-gray-700">{item.status}</td>
+                    <td className="py-3 px-4 sm:px-6 border-b border-gray-700">
                       <img src={item.file} alt={item.title} className="h-16 w-16 object-cover" />
                     </td>
-                    <td className="py-2 px-4 sm:px-6 border-b border-gray-700">{item.colorful ? 'Yes' : 'No'}</td>
-                    <td className="py-2 px-4 sm:px-6 border-b border-gray-700">
+                    <td className="py-3 px-4 sm:px-6 border-b border-gray-700">{item.colorful ? 'Yes' : 'No'}</td>
+                    <td className="py-3 px-4 sm:px-6 border-b border-gray-700">
                       <button
                         onClick={() => handleEditClick(item._id)}
                         className="bg-yellow-600 text-white px-4 py-2 rounded"
