@@ -13,7 +13,7 @@ const Portfolio = () => {
   useEffect(() => {
     const fetchPortfolioItems = async () => {
       try {
-        const response = await axios.get('https://witjabtechnologiescombo.onrender.com/api/getallportfolio');
+        const response = await axios.get('http://localhost:8000/api/getallportfolio');
         // Only set items with visibility 'public'
         const publicItems = response.data.filter(item => item.visibility === 'public');
         setPortfolioItems(publicItems);

@@ -5,12 +5,13 @@ const Contact = () => {
   return (
     <Section id="contact" crosses={true}>
       <div className="container mx-auto px-6 lg:px-20">
-        <h2 className="text-3xl lg:text-4xl font-semibold text-center text-white mb-10">
+        <h2 className="text-3xl lg:text-4xl font-semibold text-center mb-10">
           Contact Us
         </h2>
         <div className="flex flex-col lg:flex-row">
+          
           <div className="w-full lg:w-1/2 lg:pl-10">
-            <h3 className="text-2xl font-semibold text-white mb-3">Get in Touch</h3>
+            <h3 className="text-2xl font-semibold mb-3">Get in Touch</h3>
             {/* Socials */}
             <ul className="flex gap-5 flex-wrap mb-4">
               {socials.map((item) => (
@@ -18,20 +19,19 @@ const Contact = () => {
                   key={item.id}
                   href={item.url}
                   target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center w-10 h-10 bg-gray-700 rounded-full transition-colors hover:bg-gray-600"
+                  className="flex items-center justify-center w-10 h-10 bg-n-7 rounded-full transition-colors hover:bg-n-6"
                 >
                   <img src={item.iconUrl} width={16} height={16} alt={item.title} />
                 </a>
               ))}
             </ul>
-            <div className="text-gray-400 space-y-2 mb-4">
+            <div className="text-gray-700 space-y-2 mb-4">
               <p><strong>Email:</strong> contact@witjabtechnologies.com</p>
               <p><strong>Phone:</strong> (+91) 9004502414</p>
               <p><strong>Address:</strong> Thane, Maharashtra, India.</p>
             </div>
             <br />
-            <p className="text-gray-400 mb-10 ps-1">
+            <p className="text-gray-700 mb-10">
               We would love to hear from you! Whether you have a question about
               our services, pricing, or anything else, our team is ready to
               answer all your questions.
@@ -58,7 +58,7 @@ const Contact = () => {
                 <input
                   type="text"
                   id="name"
-                  className="w-full p-3 border border-gray-600 bg-gray-700 text-white rounded-lg placeholder-gray-400"
+                  className="w-full p-3 border border-gray-300 bg-gray-200 rounded-lg"
                   placeholder="Your Name"
                 />
               </div>
@@ -72,7 +72,7 @@ const Contact = () => {
                 <input
                   type="email"
                   id="email"
-                  className="w-full p-3 border border-gray-600 bg-gray-700 text-white rounded-lg placeholder-gray-400"
+                  className="w-full p-3 border border-gray-300 bg-gray-200 rounded-lg"
                   placeholder="Your Email"
                 />
               </div>
@@ -86,7 +86,7 @@ const Contact = () => {
                 <input
                   type="text"
                   id="subject"
-                  className="w-full p-3 border border-gray-600 bg-gray-700 text-white rounded-lg placeholder-gray-400"
+                  className="w-full p-3 border border-gray-300 bg-gray-200 rounded-lg"
                   placeholder="Your Subject"
                 />
               </div>
@@ -99,7 +99,7 @@ const Contact = () => {
                 </label>
                 <textarea
                   id="message"
-                  className="w-full p-3 border border-gray-600 bg-gray-700 text-white rounded-lg placeholder-gray-400"
+                  className="w-full p-3 border border-gray-300 bg-gray-200 rounded-lg"
                   rows="4"
                   placeholder="Your Message"
                 ></textarea>

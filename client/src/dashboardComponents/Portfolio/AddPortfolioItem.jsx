@@ -48,7 +48,7 @@ const AddPortfolioItem = () => {
       formDataToSend.append('colorful', formData.colorful);
       formDataToSend.append('file', formData.file);
 
-      const response = await axios.post('https://witjabtechnologiescombo.onrender.com/api/addportfolio', formDataToSend, {
+      const response = await axios.post('http://localhost:8000/api/addportfolio', formDataToSend, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data'
