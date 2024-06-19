@@ -5,10 +5,16 @@ import dotenv from 'dotenv';
 import route from './routes/userRoute.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { express as sslify } from 'express-sslify';
 
 dotenv.config();
 
 const app = express();
+
+// Force HTTPS redirect
+if (process.env.NODE_ENV === 'production') {
+  app.use(sslify.HTTPS({ trustProtoHeader: true }));
+}
 
 // Define __dirname for ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -24,6 +30,8 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.static(path.join(__dirname, 'client', 'dist')));
 
 mongoose.connect(process.env.MONGO_URL, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 }).then(() => {
   console.log('Connected to DB successfully');
 }).catch((error) => {
