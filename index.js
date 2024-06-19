@@ -32,8 +32,6 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use(express.static(path.join(__dirname, 'client', 'dist')));
 
 mongoose.connect(process.env.MONGO_URL, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
 }).then(() => {
   console.log('Connected to DB successfully');
 }).catch((error) => {
