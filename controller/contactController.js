@@ -1,5 +1,5 @@
 import nodemailer from 'nodemailer';
-import Contact from '../models/contactModel'; // Assuming Contact model is defined
+import Contact from '../models/contactModel.js'; // Assuming Contact model is defined
 
 // Function to send email notification
 const sendEmailNotification = async (name, email, subject, message) => {
