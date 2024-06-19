@@ -19,7 +19,7 @@ const EditPortfolioItem = () => {
   useEffect(() => {
     const fetchItem = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/api/getportfoliobyid/${id}`);
+        const response = await axios.get(`https://witjabtechnologiescombo.onrender.com/api/getportfoliobyid/${id}`);
         setTitle(response.data.title);
         setDescription(response.data.text);
         setImage(response.data.file);
