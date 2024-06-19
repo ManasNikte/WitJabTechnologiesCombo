@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import route from './routes/userRoute.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { express as sslify } from 'express-sslify';
+import pkg from 'express-sslify';
 
 dotenv.config();
 
@@ -13,7 +13,8 @@ const app = express();
 
 // Force HTTPS redirect
 if (process.env.NODE_ENV === 'production') {
-  app.use(sslify.HTTPS({ trustProtoHeader: true }));
+  const { https: sslify } = pkg;
+  app.use(sslify({ trustProtoHeader: true }));
 }
 
 // Define __dirname for ES modules
