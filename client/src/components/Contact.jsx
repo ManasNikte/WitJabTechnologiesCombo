@@ -4,10 +4,10 @@ import { socials } from "../constants";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
-    contactName: '',
-    contactEmail: '',
-    contactSubject: '',
-    contactMessage: ''
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
   });
 
   const handleChange = (e) => {
@@ -31,10 +31,10 @@ const Contact = () => {
         alert('Message sent successfully');
         // Optionally reset the form
         setFormData({
-          contactName: '',
-          contactEmail: '',
-          contactSubject: '',
-          contactMessage: ''
+          name: '',
+          email: '',
+          subject: '',
+          message: ''
         });
       } else {
         const error = await response.json();
@@ -93,13 +93,13 @@ const Contact = () => {
               <div className="mb-6">
                 <label
                   className="block mb-2 text-sm font-medium text-white"
-                  htmlFor="contactName"
+                  htmlFor="name"
                 >
                   Name:
                 </label>
                 <input
                   type="text"
-                  id="contactName"
+                  id="name"
                   value={formData.name}
                   onChange={handleChange}
                   className="w-full p-3 border border-gray-600 bg-gray-700 text-white rounded-lg placeholder-gray-400"
@@ -109,13 +109,13 @@ const Contact = () => {
               <div className="mb-6">
                 <label
                   className="block mb-2 text-sm font-medium text-white"
-                  htmlFor="contactEmail"
+                  htmlFor="email"
                 >
                   Email:
                 </label>
                 <input
                   type="email"
-                  id="contactEmail"
+                  id="email"
                   value={formData.email}
                   onChange={handleChange}
                   className="w-full p-3 border border-gray-600 bg-gray-700 text-white rounded-lg placeholder-gray-400"
@@ -125,13 +125,13 @@ const Contact = () => {
               <div className="mb-6">
                 <label
                   className="block mb-2 text-sm font-medium text-white"
-                  htmlFor="contactSubject"
+                  htmlFor="subject"
                 >
                   Subject:
                 </label>
                 <input
                   type="text"
-                  id="contactSubject"
+                  id="subject"
                   value={formData.subject}
                   onChange={handleChange}
                   className="w-full p-3 border border-gray-600 bg-gray-700 text-white rounded-lg placeholder-gray-400"
@@ -141,12 +141,12 @@ const Contact = () => {
               <div className="mb-6">
                 <label
                   className="block mb-2 text-sm font-medium text-white"
-                  htmlFor="contactMessage"
+                  htmlFor="message"
                 >
                   Message:
                 </label>
                 <textarea
-                  id="contactMessage"
+                  id="message"
                   value={formData.message}
                   onChange={handleChange}
                   className="w-full p-3 border border-gray-600 bg-gray-700 text-white rounded-lg placeholder-gray-400"
