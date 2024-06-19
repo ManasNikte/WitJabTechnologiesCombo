@@ -9,7 +9,7 @@ export const createPortfolioItem = async (req, res) => {
       return res.status(400).json({ msg: "File is required" });
     }
 
-    const file = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+    const file = `https://${req.get('host')}/uploads/${req.file.filename}`;
 
     if (!title || !text || !date || !status) {
       console.error('Missing required fields', { title, text, date, status });
