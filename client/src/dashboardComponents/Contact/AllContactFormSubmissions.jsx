@@ -7,7 +7,7 @@ const AllContactFormSubmissions = () => {
   useEffect(() => {
     const fetchSubmissions = async () => {
       try {
-        const response = await axios.get('https://witjabtechnologiescombo.onrender.com/api/submissions');
+        const response = await axios.get('https://witjabtechnologiescombo.onrender.com/api/contact');
         setSubmissions(response.data);
       } catch (error) {
         console.error('Error fetching submissions:', error);
@@ -26,6 +26,7 @@ const AllContactFormSubmissions = () => {
             <tr>
               <th className="py-2 px-4 border-b">Name</th>
               <th className="py-2 px-4 border-b">Email</th>
+              <th className="py-2 px-4 border-b">Subject</th>
               <th className="py-2 px-4 border-b">Message</th>
             </tr>
           </thead>
@@ -34,6 +35,7 @@ const AllContactFormSubmissions = () => {
               <tr key={submission.id}>
                 <td className="py-2 px-4 border-b">{submission.name}</td>
                 <td className="py-2 px-4 border-b">{submission.email}</td>
+                <td className="py-2 px-4 border-b">{submission.subject}</td>
                 <td className="py-2 px-4 border-b">{submission.message}</td>
               </tr>
             ))}
