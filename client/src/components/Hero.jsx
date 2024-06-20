@@ -35,7 +35,7 @@ const Hero = () => {
           <p className="body-1 max-w-3xl mx-auto mb-6 text-n-2 lg:mb-8">
             Elevate your business with WitJab Technologies. Experience innovation and power, redefined.
           </p>
-          <Button href="/about" white>
+          <Button href="/#about" white>
             Get started
           </Button>
         </div>
