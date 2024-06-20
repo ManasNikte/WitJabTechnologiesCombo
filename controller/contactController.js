@@ -46,21 +46,32 @@ const sendEmailNotification = async (name, email, subject, message) => {
 
 // Controller function to handle new contact form submission
 export const newContactSubmission = async (req, res) => {
+  const { name, email, subject, message } = req.body;
+
+  if (!name || !email || !subject || !message) {
+    return res.status(400).json({ msg: 'Please fill in all fields' });
+  }
+
   try {
-    const { name, email, subject, message } = req.body;
+    const newContact = new Contact({
+      name,
+      email,
+      subject,
+      message
+    });
 
-    const contactData = new Contact({ name, email, subject, message });
-    const savedData = await contactData.save();
+    await newContact.save();
 
+    res.status(200).json({ msg: 'Message sent successfully' });
     // Send email notification after saving contact data
     await sendEmailNotification(name, email, subject, message);
-
-    res.status(201).json(savedData);
   } catch (error) {
-    console.error('Error saving contact form submission:', error);
-    res.status(500).json({ msg: 'Server error', error: error.message });
+    console.error('Error saving contact submission:', error);
+    res.status(500).json({ msg: 'Server error, please try again later' });
   }
 };
+
+
 
 
 export const getAllContacts = async (req, res) => {
