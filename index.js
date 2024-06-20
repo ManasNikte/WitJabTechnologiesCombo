@@ -5,15 +5,13 @@ import dotenv from 'dotenv';
 import route from './routes/userRoute.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
-
-// Forcing HTTPS in production
 import sslify from 'express-sslify';
 
 dotenv.config();
 
 const app = express();
 
-// Force HTTPS redirect
+// Force HTTPS redirect in production
 if (process.env.NODE_ENV === 'production') {
   app.use(sslify.HTTPS({ trustProtoHeader: true }));
 }
@@ -31,20 +29,24 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Serve static files from the Vite build directory
 app.use(express.static(path.join(__dirname, 'client', 'dist')));
 
-mongoose.connect(process.env.MONGO_URL, {
-}).then(() => {
-  console.log('Connected to DB successfully');
-}).catch((error) => {
-  console.error('Error connecting to the database:', error);
-});
+// Database connection
+mongoose.connect(process.env.MONGO_URL, {})
+  .then(() => {
+    console.log('Connected to DB successfully');
+  })
+  .catch((error) => {
+    console.error('Error connecting to the database:', error);
+  });
 
+// API routes
 app.use('/api', route);
 
-// Catch-all handler to serve the React app's index.html file for any unknown routes
+// Catch-all handler for serving the React app's index.html file for unknown routes
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
 });
 
+// Start the server
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);
