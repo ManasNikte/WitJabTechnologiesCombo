@@ -70,7 +70,7 @@ const Contact = () => {
             </ul>
             <div className="text-white space-y-2 mb-4">
               <p><strong>Email:</strong> contact@witjabtechnologies.com</p>
-              <p><strong>Phone:</strong> (+91) 9004502414</p>
+              <p><strong>Phone:</strong> (+91) 7021668646</p>
               <p><strong>Address:</strong> Thane, Maharashtra, India.</p>
             </div>
             <p className="text-white mb-10 ps-1">
