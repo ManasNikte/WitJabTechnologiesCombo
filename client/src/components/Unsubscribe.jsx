@@ -9,7 +9,8 @@ const Unsubscribe = () => {
   useEffect(() => {
     const fetchSubscriptionDetails = async () => {
       try {
-        const response = await axios.get(`https://witjabtechnologiescombo.onrender.com/newsletter/${encodeURIComponent(email)}`);
+        const decodedEmail = decodeURIComponent(email); // Decode the email parameter
+        const response = await axios.get(`https://witjabtechnologiescombo.onrender.com/newsletter/${decodedEmail}`);
         setSubscribedUser(response.data); // Assuming server returns details of subscribed user
       } catch (error) {
         console.error('Error fetching subscription details:', error);
@@ -24,7 +25,7 @@ const Unsubscribe = () => {
       console.error('No subscription details found.');
       return;
     }
-
+  
     const confirmed = window.confirm(`Are you sure you want to unsubscribe ${subscribedUser.email}?`);
     if (confirmed) {
       try {
