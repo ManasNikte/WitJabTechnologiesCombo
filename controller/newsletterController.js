@@ -1,5 +1,6 @@
 import Newsletter from "../models/newsletterModel.js";
 import nodemailer from "nodemailer";
+import { URLSearchParams } from 'url';
 // Nodemailer transporter setup
 const transporter = nodemailer.createTransport({
   host: "smtp.hostinger.com",
@@ -87,16 +88,14 @@ export const getAllNewslettersSubscribers = async (req, res) => {
 
   export const unsubscribeNewsletter = async (req, res) => {
     try {
-      const { email } = req.params; // Use req.params to get URL parameters
-      const deletedNewsletter = await Newsletter.findOneAndDelete({ email });
+      const params = new URLSearchParams();
+      params.append('email', encodeURIComponent(email)); // Add encoded email as parameter
   
-      if (!deletedNewsletter) {
-        return res.status(404).json({ msg: 'Newsletter subscription not found' });
-      }
+      const url = `https://witjabtechnologiescombo.onrender.com/newsletterunsubscribe`;
+      const response = await axios.delete(url, { params }); // Use params object for query string
   
-      res.status(200).json({ msg: 'Successfully unsubscribed' });
+      console.log('Successfully unsubscribed');
     } catch (error) {
       console.error('Error unsubscribing:', error);
-      res.status(500).json({ msg: 'Failed to unsubscribe' });
     }
   };
