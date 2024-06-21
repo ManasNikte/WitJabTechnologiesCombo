@@ -78,7 +78,7 @@ const App = () => {
         { path: "addportfolio", element: <AddPortfolioItem /> },
         { path: "editportfolio/:id", element: <EditPortfolioItem /> },
         { path: "allreviews", element: <AllReviews /> },
-        { path: "editreview", element: <EditReview /> },
+        { path: "editreview/:id", element: <EditReview /> },
         { path: "allcontactformsubmissions", element: <AllContactFormSubmissions /> },
         { path: "profile", element: <Profile /> },
       ],
