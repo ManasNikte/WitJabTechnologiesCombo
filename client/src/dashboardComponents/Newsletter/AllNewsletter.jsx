@@ -1,0 +1,132 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+const AllNewsletter = () => {
+  const [subscribers, setSubscribers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+
+  const token = localStorage.getItem('token');
+
+  useEffect(() => {
+    const fetchSubscribers = async (page) => {
+      try {
+        const response = await axios.get(`https://witjabtechnologiescombo.onrender.com/api/newsletter?page=${page}&limit=10`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        setSubscribers(response.data.newsletters);
+        setTotalPages(response.data.totalPages);
+      } catch (error) {
+        console.error('Error fetching subscribers:', error);
+        setError('Failed to fetch subscribers');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSubscribers(currentPage);
+  }, [currentPage, token]);
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const renderPageNumbers = () => {
+    const pageNumbers = [];
+    for (let i = 1; i <= totalPages; i++) {
+      if (
+        i === 1 ||
+        i === totalPages ||
+        (i >= currentPage - 1 && i <= currentPage + 1)
+      ) {
+        pageNumbers.push(
+          <button
+            key={i}
+            onClick={() => setCurrentPage(i)}
+            className={`px-3 py-1 rounded-md ${
+              i === currentPage
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+            }`}
+          >
+            {i}
+          </button>
+        );
+      } else if (i === currentPage - 2 || i === currentPage + 2) {
+        pageNumbers.push(
+          <span key={i} className="px-3 py-1 text-gray-300">
+            ...
+          </span>
+        );
+      }
+    }
+    return pageNumbers;
+  };
+
+  if (loading) {
+    return <div className="container mx-auto p-4 text-white">Loading...</div>;
+  }
+
+  if (error) {
+    return <div className="container mx-auto p-4 text-white">{error}</div>;
+  }
+
+  return (
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4 text-white">Newsletter Subscribers</h1>
+      <div className="overflow-x-auto">
+        <div className="bg-gray-800 rounded-lg shadow-lg">
+          <div className="max-h-screen-half overflow-y-auto">
+            <table className="min-w-full bg-gray-800 text-white border border-gray-700">
+              <thead className="bg-gray-700">
+                <tr>
+                  <th className="py-3 px-4 border-b border-gray-700 text-left">Email</th>
+                  <th className="py-3 px-4 border-b border-gray-700 text-left">Timestamp</th>
+                </tr>
+              </thead>
+              <tbody>
+                {subscribers.map((subscriber) => (
+                  <tr key={subscriber._id} className="hover:bg-gray-700">
+                    <td className="py-3 px-4 border-b border-gray-700">{subscriber.email}</td>
+                    <td className="py-3 px-4 border-b border-gray-700">{new Date(subscriber.createdAt).toLocaleString()}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div className="flex justify-between mt-4">
+          <button
+            onClick={handlePrevPage}
+            disabled={currentPage === 1}
+            className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 disabled:opacity-50"
+          >
+            Previous
+          </button>
+          <div className="flex space-x-1">{renderPageNumbers()}</div>
+          <button
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+            className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 disabled:opacity-50"
+          >
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default AllNewsletter;

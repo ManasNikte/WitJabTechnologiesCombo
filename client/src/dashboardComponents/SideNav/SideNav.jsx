@@ -40,13 +40,19 @@ const SideNav = () => {
           <li className="mb-4">
             <Link to="/dashboard/allcontactformsubmissions" className="flex items-center py-2 px-4 rounded hover:bg-gray-700">
               <FontAwesomeIcon icon={faEnvelope} className="mr-4" />
-              <span className={isCollapsed ? 'hidden' : 'block'}>Contact Submissions</span>
+              <span className={isCollapsed ? 'hidden' : 'block'}>Contact<br />Submissions</span>
             </Link>
           </li>
           <li className="mb-4">
             <Link to="/dashboard/allreviews" className="flex items-center py-2 px-4 rounded hover:bg-gray-700">
               <FontAwesomeIcon icon={faStar} className="mr-4" />
               <span className={isCollapsed ? 'hidden' : 'block'}>Reviews</span>
+            </Link>
+          </li>
+          <li className="mb-4">
+            <Link to="/dashboard/allnewsletter" className="flex items-center py-2 px-4 rounded hover:bg-gray-700">
+              <FontAwesomeIcon icon={faStar} className="mr-4" />
+              <span className={isCollapsed ? 'hidden' : 'block'}>Newsletter<br />Subscribers</span>
             </Link>
           </li>
         </ul>

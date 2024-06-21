@@ -59,13 +59,24 @@ export const subscribeNewsletter = async (req, res) => {
 };
 
 export const getAllNewslettersSubscribers = async (req, res) => {
-  try {
-    const newsletters = await Newsletter.find();
-    res.status(200).json(newsletters);
-  } catch (error) {
-    res.status(500).json({ msg: error.message });
-  }
-};
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10; // Adjust the limit as per your requirement
+    const skip = (page - 1) * limit;
+  
+    try {
+      const newsletters = await Newsletter.find()
+        .sort({ createdAt: -1 }) // Sort by createdAt in descending order (latest first)
+        .skip(skip)
+        .limit(limit);
+  
+      const totalDocuments = await Newsletter.countDocuments();
+      const totalPages = Math.ceil(totalDocuments / limit);
+  
+      res.status(200).json({ newsletters, totalPages });
+    } catch (error) {
+      res.status(500).json({ msg: error.message });
+    }
+  };
 
 export const unsubscribeNewsletter = async (req, res) => {
   try {

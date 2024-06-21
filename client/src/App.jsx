@@ -23,6 +23,7 @@ import EditReview from "./dashboardComponents/Reviews/EditReview";
 import Review from "./components/Reviews";
 import AddReview from "./dashboardComponents/Reviews/AddReview";
 import Unsubscribe from "./components/Unsubscribe";
+import AllNewsletter from "./dashboardComponents/Newsletter/AllNewsletter";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -85,6 +86,7 @@ const App = () => {
         { path: "allreviews", element: <AllReviews /> },
         { path: "editreview/:id", element: <EditReview /> },
         { path: "allcontactformsubmissions", element: <AllContactFormSubmissions /> },
+        { path: "allnewsletter", element: <AllNewsletter/> },
         { path: "profile", element: <Profile /> },
       ],
     },
