@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 
 const AllReviews = () => {
+  const navigate = useNavigate();
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await axios.get('https://witjabtechnologiescombo.onrender.com/api/reviews');
+        const response = await axios.get('https://witjabtechnologiescombo.onrender.com/api/getreviews');
         setReviews(response.data);
       } catch (error) {
         console.error('Error fetching reviews:', error);
@@ -17,28 +19,69 @@ const AllReviews = () => {
     fetchReviews();
   }, []);
 
+  const handleInviteClick = () => {
+    const inviteLink = `${window.location.origin}/newreview`;
+    navigator.clipboard.writeText(inviteLink)
+      .then(() => {
+        console.log('Invite link copied to clipboard:', inviteLink);
+        // Optionally show a success message or perform other actions
+      })
+      .catch((error) => {
+        console.error('Error copying invite link:', error);
+        // Handle error scenarios, e.g., display an error message
+      });
+  };
+
+  const handleEditClick = (id) => {
+    navigate(`/dashboard/editreview/${id}`);
+  };
+
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">All Reviews</h1>
+      <div className="flex justify-between items-center mb-4">
+        <h1 className="text-2xl font-bold text-white">Reviews</h1>
+        <button className="bg-green-500 text-white px-4 py-2 rounded" onClick={handleInviteClick}>
+          Invite to Review
+        </button>
+      </div>
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-white border">
-          <thead>
-            <tr>
-              <th className="py-2 px-4 border-b">Reviewer</th>
-              <th className="py-2 px-4 border-b">Review</th>
-              <th className="py-2 px-4 border-b">Rating</th>
-            </tr>
-          </thead>
-          <tbody>
-            {reviews.map((review) => (
-              <tr key={review.id}>
-                <td className="py-2 px-4 border-b">{review.reviewer}</td>
-                <td className="py-2 px-4 border-b">{review.review}</td>
-                <td className="py-2 px-4 border-b">{review.rating}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="bg-gray-800 rounded-lg shadow-lg">
+          <div className="max-h-screen-half overflow-y-auto">
+            <table className="min-w-full bg-gray-800 text-white border border-gray-700">
+              <thead className="bg-gray-700">
+                <tr>
+                  <th className="py-3 px-4 sm:px-6 border-b border-gray-700 text-left">Stars</th>
+                  <th className="py-3 px-4 sm:px-6 border-b border-gray-700 text-left">Name</th>
+                  <th className="py-3 px-4 sm:px-6 border-b border-gray-700 text-left">Post</th>
+                  <th className="py-3 px-4 sm:px-6 border-b border-gray-700 text-left">Company</th>
+                  <th className="py-3 px-4 sm:px-6 border-b border-gray-700 text-left">Text</th>
+                  <th className="py-3 px-4 sm:px-6 border-b border-gray-700 text-left">Visibility</th>
+                  <th className="py-3 px-4 sm:px-6 border-b border-gray-700 text-left">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {reviews.map((review) => (
+                  <tr key={review._id} className="hover:bg-gray-700">
+                    <td className="py-3 px-4 sm:px-6 border-b border-gray-700">{review.stars}</td>
+                    <td className="py-3 px-4 sm:px-6 border-b border-gray-700">{review.name}</td>
+                    <td className="py-3 px-4 sm:px-6 border-b border-gray-700">{review.post}</td>
+                    <td className="py-3 px-4 sm:px-6 border-b border-gray-700">{review.company}</td>
+                    <td className="py-3 px-4 sm:px-6 border-b border-gray-700">{review.text}</td>
+                    <td className="py-3 px-4 sm:px-6 border-b border-gray-700">{review.visibility}</td>
+                    <td className="py-3 px-4 sm:px-6 border-b border-gray-700">
+                      <button
+                        className="bg-yellow-600 text-white px-4 py-2 rounded"
+                        onClick={() => handleEditClick(review._id)}
+                      >
+                        Edit
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   );

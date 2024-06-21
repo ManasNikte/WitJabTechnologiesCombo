@@ -19,6 +19,7 @@ import AllContactFormSubmissions from "./dashboardComponents/Contact/AllContactF
 import Profile from "./dashboardComponents/Profile/Profile";
 import SideNav from "./dashboardComponents/SideNav/SideNav";
 import Dashboard from "./dashboardComponents/Home/Dashboard";
+import EditReview from "./dashboardComponents/Reviews/EditReview";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -43,6 +44,10 @@ const App = () => {
     {
       path: "/login",
       element: <Login />,
+    },
+    {
+      path: "newreview", 
+      element: <AddReview /> 
     },
     {
       path: "/logout",
@@ -70,6 +75,7 @@ const App = () => {
         { path: "addportfolio", element: <AddPortfolioItem /> },
         { path: "editportfolio/:id", element: <EditPortfolioItem /> },
         { path: "allreviews", element: <AllReviews /> },
+        { path: "editreview", element: <EditReviewReview /> },
         { path: "allcontactformsubmissions", element: <AllContactFormSubmissions /> },
         { path: "profile", element: <Profile /> },
       ],

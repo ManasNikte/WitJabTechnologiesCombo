@@ -3,13 +3,26 @@ import { createUser, getAllUsers, getUserById, updateUser, deleteUser, login, lo
 import { createPortfolioItem, getAllPortfolioItems, getPortfolioItemById, updatePortfolioItem, deletePortfolioItem } from '../controller/portfolioController.js';
 import { authMiddleware } from '../middleware/authMiddleware.js';
 import upload from '../middleware/upload.js';
-import { newContactSubmission, getAllContacts } from '../controller/contactController.js';
+import { newContactSubmission, getAllContacts, getReviewById, updateReviewById } from '../controller/contactController.js';
+import { addReview, getReviews } from '../controllers/reviewController.js';
 const router = express.Router();
 
 // Public routes
 router.post("/createuser", createUser);
 router.post("/login", login);
 router.post("/contact", newContactSubmission);
+
+// Create a new review
+router.post('/addreview', addReview);
+
+// Get all reviews
+router.get('/getreviews', getReviews);
+
+// Get all reviews
+router.get('/getreview/:id', getReviewById );
+
+// Update a review
+router.put("/updatereview/:id", updateReviewById);
 
 // Protected routes
 router.get("/getallusers", authMiddleware, getAllUsers);
