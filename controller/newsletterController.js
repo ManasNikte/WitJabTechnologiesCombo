@@ -1,6 +1,6 @@
 import Newsletter from "../models/newsletterModel.js";
 import nodemailer from "nodemailer";
-
+import { Logo } from "../client/src/assets/WitJabTechnologies.png"
 // Nodemailer transporter setup
 const transporter = nodemailer.createTransport({
   host: "smtp.hostinger.com",
@@ -21,7 +21,7 @@ const sendWelcomeEmail = async (email) => {
     subject: "Welcome to WitJab Technologies Newsletter", // Subject line
     html: `
       <div style="font-family: Arial, sans-serif; text-align: center;">
-        <img src="https://yourdomain.com/path-to-logo.png" alt="WitJab Technologies" style="width: 150px; margin-bottom: 20px;">
+        <img src="${Logo}" alt="WitJab Technologies" style="width: 150px; margin-bottom: 20px;">
         <h2>Welcome to WitJab Technologies Newsletter!</h2>
         <p>Thank you for subscribing to our newsletter. We are thrilled to have you with us.</p>
         <p>You will receive the latest updates, news, and exclusive offers directly to your inbox.</p>
@@ -80,13 +80,13 @@ export const getAllNewslettersSubscribers = async (req, res) => {
 
 export const unsubscribeNewsletter = async (req, res) => {
   try {
-    const { email } = req.body;
-    if (!email) {
-      return res.status(400).json({ msg: "Email is required" });
-    }
     const deletedNewsletter = await Newsletter.findOneAndDelete({ email });
-    res.status(200).json(deletedNewsletter);
+    if (!deletedNewsletter) {
+      return res.status(404).json({ msg: 'Newsletter subscription not found' });
+    }
+    res.status(200).json({ msg: 'Successfully unsubscribed' });
   } catch (error) {
-    res.status(500).json({ msg: error.message });
+    console.error('Error unsubscribing:', error);
+    res.status(500).json({ msg: 'Failed to unsubscribe' });
   }
 };
