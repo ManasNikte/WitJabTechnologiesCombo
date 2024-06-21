@@ -1,13 +1,14 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
-const Unsubscribe = ({ match }) => {
-  const { email } = match.params;
+const Unsubscribe = () => {
+  const { email } = useParams(); // Use useParams hook to get route parameters
 
   useEffect(() => {
     const unsubscribe = async () => {
       try {
-        await axios.delete(`https://witjabtechnologiescombo.onrender.com/newsletterunsubscribe/${email}`);
+        await axios.delete(`https://witjabtechnologiescombo.onrender.com/newsletterunsubscribe/${encodeURIComponent(email)}`);
         console.log('Successfully unsubscribed');
       } catch (error) {
         console.error('Error unsubscribing:', error);
