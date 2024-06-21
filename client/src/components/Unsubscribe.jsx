@@ -13,7 +13,7 @@ const Unsubscribe = () => {
       console.log('Fetching subscription details for ID:', id);
 
       try {
-        const response = await axios.get(`https://witjabtechnologiescombo.onrender.com/newsletterbyid/${id}`);
+        const response = await axios.get(`https://witjabtechnologiescombo.onrender.com/api/newsletterbyid/${id}`);
         console.log('Fetched subscription details:', response.data);
 
         setSubscribedUser(response.data); // Assuming server returns details of subscribed user
@@ -38,7 +38,7 @@ const Unsubscribe = () => {
       console.log('User confirmed unsubscribe');
       
       try {
-        await axios.delete(`https://witjabtechnologiescombo.onrender.com/newsletterunsubscribe/${id}`);
+        await axios.delete(`https://witjabtechnologiescombo.onrender.com/api/newsletterunsubscribe/${id}`);
         console.log('Successfully unsubscribed');
       } catch (error) {
         console.error('Error unsubscribing:', error);
