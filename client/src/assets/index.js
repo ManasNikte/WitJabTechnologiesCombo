@@ -83,7 +83,7 @@ import facebook from "./socials/facebook.svg";
 import instagram from "./socials/instagram.svg";
 import telegram from "./socials/telegram.svg";
 import twitter from "./socials/twitter.svg";
-
+import whatsapp from "./socials/whatsapp.png";
 
 
 export {
@@ -164,4 +164,5 @@ export {
   react,
   tailwind,
   vscode,
+  whatsapp,
 };
