@@ -1,4 +1,4 @@
-import Newsletter from "../models/newsletterModel";
+import Newsletter from "../models/newsletterModel.js";
 import nodemailer from "nodemailer";
 
 // Nodemailer transporter setup
