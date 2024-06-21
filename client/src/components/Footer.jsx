@@ -17,7 +17,7 @@ const Footer = () => {
     }
 
     try {
-      await axios.post('https://witjabtechnologiescombo.onrender.com//api/newsletter', { email });
+      await axios.post('https://witjabtechnologiescombo.onrender.com/api/newsletter', { email });
       setMessage('Thank you for subscribing!');
       setEmail('');
     } catch (error) {
