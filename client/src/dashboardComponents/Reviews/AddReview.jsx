@@ -10,12 +10,11 @@ const AddReview = () => {
   const [post, setPost] = useState('');
   const [company, setCompany] = useState('');
   const [text, setText] = useState('');
-  const [visibility, setVisibility] = useState('private'); // Default visibility
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const newReview = { stars, name, post, company, text, visibility };
+      const newReview = { stars, name, post, company, text };
       await axios.post('https://witjabtechnologiescombo.onrender.com/api/addreview', newReview);
       navigate('/dashboard'); // Navigate back to dashboard after successful submission
     } catch (error) {
@@ -91,21 +90,6 @@ const AddReview = () => {
             onChange={(e) => setText(e.target.value)}
             required
           />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-400 text-sm mb-2" htmlFor="visibility">
-            Visibility
-          </label>
-          <select
-            className="input"
-            id="visibility"
-            value={visibility}
-            onChange={(e) => setVisibility(e.target.value)}
-            required
-          >
-            <option value="public">Public</option>
-            <option value="private">Private</option>
-          </select>
         </div>
         <div className="flex justify-end">
           <button className="bg-green-500 text-white px-4 py-2 rounded" type="submit">
