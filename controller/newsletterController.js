@@ -1,6 +1,5 @@
 import Newsletter from "../models/newsletterModel.js";
 import nodemailer from "nodemailer";
-import { Logo } from "../client/src/assets/WitJabTechnologies.png"
 // Nodemailer transporter setup
 const transporter = nodemailer.createTransport({
   host: "smtp.hostinger.com",
@@ -21,7 +20,7 @@ const sendWelcomeEmail = async (email) => {
     subject: "Welcome to WitJab Technologies Newsletter", // Subject line
     html: `
       <div style="font-family: Arial, sans-serif; text-align: center;">
-        <img src="${Logo}" alt="WitJab Technologies" style="width: 150px; margin-bottom: 20px;">
+        <img src="https://res.cloudinary.com/deutek0w7/image/upload/v1718981832/uzmpjtmirqfueoewdbhb.png" alt="WitJab Technologies" style="width: 150px; margin-bottom: 20px;">
         <h2>Welcome to WitJab Technologies Newsletter!</h2>
         <p>Thank you for subscribing to our newsletter. We are thrilled to have you with us.</p>
         <p>You will receive the latest updates, news, and exclusive offers directly to your inbox.</p>
