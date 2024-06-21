@@ -5,6 +5,7 @@ import { authMiddleware } from '../middleware/authMiddleware.js';
 import upload from '../middleware/upload.js';
 import { newContactSubmission, getAllContacts } from '../controller/contactController.js';
 import { addReview, getReviews, getReviewById, updateReviewById } from '../controller/reviewController.js';
+import { subscribeNewsletter, getAllNewslettersSubscribers, unsubscribeNewsletter } from '../controller/newsletterController.js';
 const router = express.Router();
 
 // Public routes
@@ -23,6 +24,12 @@ router.get('/getreview/:id', getReviewById );
 
 // Update a review
 router.put("/updatereview/:id", updateReviewById);
+
+// Newsletter Routes
+router.post("/newsletter", subscribeNewsletter);
+router.delete("/newsletterunsubscribe/:email", unsubscribeNewsletter);
+router.get("/newsletter", authMiddleware, getAllNewslettersSubscribers);
+
 
 // Protected routes
 router.get("/getallusers", authMiddleware, getAllUsers);

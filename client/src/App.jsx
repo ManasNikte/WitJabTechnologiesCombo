@@ -22,6 +22,7 @@ import Dashboard from "./dashboardComponents/Home/Dashboard";
 import EditReview from "./dashboardComponents/Reviews/EditReview";
 import Review from "./components/Reviews";
 import AddReview from "./dashboardComponents/Reviews/AddReview";
+import Unsubscribe from "./components/Unsubscribe";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -47,6 +48,10 @@ const App = () => {
     {
       path: "/login",
       element: <Login />,
+    },
+    {
+      path: "/unsubscribe",
+      element: <Unsubscribe />,
     },
     {
       path: "/newreview", 

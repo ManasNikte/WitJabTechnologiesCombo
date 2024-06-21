@@ -17,7 +17,7 @@ const Footer = () => {
     }
 
     try {
-      await axios.post('https://yourapiurl.com/api/newsletter', { email });
+      await axios.post('https://witjabtechnologiescombo.onrender.com//api/newsletter', { email });
       setMessage('Thank you for subscribing!');
       setEmail('');
     } catch (error) {
@@ -34,7 +34,7 @@ const Footer = () => {
           <p className="mb-4 text-center text-n-4 text-sm">We won't spam you, promise!</p>
           <form onSubmit={handleSubmit} className="flex flex-col items-center w-full max-w-sm">
             <input
-              className="appearance-none border w-full py-2 px-3 mb-4 text-black leading-tight focus:outline-none focus:shadow-outline text-sm"
+              className="appearance-none border w-full py-2 px-3 mb-4 text-white leading-tight focus:outline-none focus:shadow-outline text-sm"
               type="email"
               id="email"
               placeholder="Enter your email"
