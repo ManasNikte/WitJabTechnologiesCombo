@@ -24,9 +24,10 @@ const AddReview = () => {
   };
 
   return (
+<>
+<br /><br /><br /><br />
     <div className="container mx-auto p-4 bg-gray-800 text-white">
-      <br /><br />
-      <h1 className="text-2xl font-bold mb-4">Add New Review</h1>
+      <h1 className="text-2xl font-bold mb-4 text-center">Add New Review</h1>
       <form onSubmit={handleSubmit} className="bg-gray-700 shadow-md rounded px-4 sm:px-8 pt-6 pb-8 mb-4">
         <div className="mb-4">
           <label className="block text-white text-sm mb-2" htmlFor="stars">
@@ -92,13 +93,14 @@ const AddReview = () => {
             required
           />
         </div>
-        <div className="flex justify-end">
+        <div className="flex justify-center">
           <button className="btn bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
             Submit Review
           </button>
         </div>
       </form>
     </div>
+    </>
   );
 };
 
