@@ -28,11 +28,11 @@ const AddReview = () => {
       <h1 className="text-2xl font-bold mb-4">Add New Review</h1>
       <form onSubmit={handleSubmit} className="bg-gray-700 shadow-md rounded px-4 sm:px-8 pt-6 pb-8 mb-4">
         <div className="mb-4">
-          <label className="block text-sm font-bold mb-2" htmlFor="stars">
+          <label className="block text-white text-sm mb-2" htmlFor="stars">
             Stars
           </label>
           <input
-            className="input"
+            className="input appearance-none border w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
             type="number"
             id="stars"
             value={stars}
@@ -41,11 +41,11 @@ const AddReview = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-bold mb-2" htmlFor="name">
+          <label className="block text-white text-sm mb-2" htmlFor="name">
             Name
           </label>
           <input
-            className="input"
+            className="input appearance-none border w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
             type="text"
             id="name"
             value={name}
@@ -54,11 +54,11 @@ const AddReview = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-bold mb-2" htmlFor="post">
+          <label className="block text-white text-sm mb-2" htmlFor="post">
             Post
           </label>
           <input
-            className="input"
+            className="input appearance-none border w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
             type="text"
             id="post"
             value={post}
@@ -67,11 +67,11 @@ const AddReview = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-bold mb-2" htmlFor="company">
+          <label className="block text-white text-sm mb-2" htmlFor="company">
             Company
           </label>
           <input
-            className="input"
+            className="input appearance-none border w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
             type="text"
             id="company"
             value={company}
@@ -80,11 +80,11 @@ const AddReview = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-sm font-bold mb-2" htmlFor="text">
+          <label className="block text-white text-sm mb-2" htmlFor="text">
             Text
           </label>
           <textarea
-            className="input h-32"
+            className="input appearance-none border w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline h-32"
             id="text"
             value={text}
             onChange={(e) => setText(e.target.value)}
@@ -92,7 +92,7 @@ const AddReview = () => {
           />
         </div>
         <div className="flex justify-end">
-          <button className="btn" type="submit">
+          <button className="btn bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
             Submit Review
           </button>
         </div>
