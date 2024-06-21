@@ -45,6 +45,13 @@ export const subscribeNewsletter = async (req, res) => {
       return res.status(400).json({ msg: "Email is required" });
     }
 
+    // Check if email already exists
+    const existingNewsletter = await Newsletter.findOne({ email });
+    if (existingNewsletter) {
+      return res.status(400).json({ msg: "Email is already subscribed." });
+    }
+
+    // If email does not exist, save it
     const newNewsletter = new Newsletter({ email });
     const savedNewsletter = await newNewsletter.save();
 
@@ -56,6 +63,7 @@ export const subscribeNewsletter = async (req, res) => {
     res.status(500).json({ msg: error.message });
   }
 };
+
 
 export const getAllNewslettersSubscribers = async (req, res) => {
     const page = parseInt(req.query.page) || 1;
