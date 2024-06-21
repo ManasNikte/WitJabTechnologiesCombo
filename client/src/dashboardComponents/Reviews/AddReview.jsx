@@ -26,7 +26,7 @@ const AddReview = () => {
   return (
     <div className="container mx-auto p-4 bg-gray-800 text-white">
       <h1 className="text-2xl font-bold mb-4">Add New Review</h1>
-      <form onSubmit={handleSubmit} className="bg-gray-700 shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <form onSubmit={handleSubmit} className="bg-gray-700 shadow-md rounded px-4 sm:px-8 pt-6 pb-8 mb-4">
         <div className="mb-4">
           <label className="block text-sm font-bold mb-2" htmlFor="stars">
             Stars
