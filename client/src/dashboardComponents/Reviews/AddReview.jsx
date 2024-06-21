@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 
 const AddReview = () => {
   const navigate = useNavigate();
-
-  const [stars, setStars] = useState('');
+  const [stars, setStars] = useState(0); // Use 0 as the initial value
+  const [hoverStars, setHoverStars] = useState(0); // State to track hovered stars
   const [name, setName] = useState('');
   const [post, setPost] = useState('');
   const [company, setCompany] = useState('');
@@ -16,90 +16,111 @@ const AddReview = () => {
     try {
       const newReview = { stars, name, post, company, text };
       await axios.post('https://witjabtechnologiescombo.onrender.com/api/addreview', newReview);
-      navigate('/dashboard'); // Navigate back to dashboard after successful submission
+      navigate('/'); // Navigate back to dashboard after successful submission
     } catch (error) {
       console.error('Error adding review:', error);
       // Handle error scenarios, e.g., display an error message
     }
   };
 
+  const handleStarClick = (index) => {
+    setStars(index + 1); // Stars are 1-based, so add 1 to the index
+  };
+
+  const handleMouseEnter = (index) => {
+    setHoverStars(index + 1);
+  };
+
+  const handleMouseLeave = () => {
+    setHoverStars(0);
+  };
+
   return (
-<>
-<br /><br /><br /><br />
-    <div className="container mx-auto p-4 bg-gray-800 text-white">
-      <h1 className="text-2xl font-bold mb-4 text-center">Add New Review</h1>
-      <form onSubmit={handleSubmit} className="bg-gray-700 shadow-md rounded px-4 sm:px-8 pt-6 pb-8 mb-4">
-        <div className="mb-4">
-          <label className="block text-white text-sm mb-2" htmlFor="stars">
-            Stars
-          </label>
-          <input
-            className="input appearance-none border w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
-            type="number"
-            id="stars"
-            value={stars}
-            onChange={(e) => setStars(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-white text-sm mb-2" htmlFor="name">
-            Name
-          </label>
-          <input
-            className="input appearance-none border w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
-            type="text"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-white text-sm mb-2" htmlFor="post">
-            Post
-          </label>
-          <input
-            className="input appearance-none border w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
-            type="text"
-            id="post"
-            value={post}
-            onChange={(e) => setPost(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-white text-sm mb-2" htmlFor="company">
-            Company
-          </label>
-          <input
-            className="input appearance-none border w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
-            type="text"
-            id="company"
-            value={company}
-            onChange={(e) => setCompany(e.target.value)}
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-white text-sm mb-2" htmlFor="text">
-            Text
-          </label>
-          <textarea
-            className="input appearance-none border w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline h-32"
-            id="text"
-            value={text}
-            onChange={(e) => setText(e.target.value)}
-            required
-          />
-        </div>
-        <div className="flex justify-center">
-          <button className="btn bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-            Submit Review
-          </button>
-        </div>
-      </form>
-    </div>
+    <>
+      <br /><br /><br /><br />
+      <div className="container mx-auto p-4 bg-gray-800 text-white">
+        <h1 className="text-2xl font-bold mb-4 text-center">Add New Review</h1>
+        <form onSubmit={handleSubmit} className="bg-gray-700 shadow-md rounded px-4 sm:px-8 pt-6 pb-8 mb-4">
+          <div className="mb-4">
+            <label className="block text-white text-sm mb-2">Stars</label>
+            <div className="flex justify-center">
+              {[...Array(5)].map((_, index) => (
+                <svg
+                  key={index}
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className={`w-6 h-6 cursor-pointer ${
+                    index < (hoverStars || stars) ? 'text-yellow-500' : 'text-gray-400'
+                  }`}
+                  onClick={() => handleStarClick(index)}
+                  onMouseEnter={() => handleMouseEnter(index)}
+                  onMouseLeave={handleMouseLeave}
+                  required
+                >
+                  <path d="M12 .587l3.668 7.568L24 9.763l-6 5.882 1.418 8.268L12 19.424l-7.418 4.489L6 15.645 0 9.763l8.332-1.608z" />
+                </svg>
+              ))}
+            </div>
+          </div>
+          <div className="mb-4">
+            <label className="block text-white text-sm mb-2" htmlFor="name">
+              Name
+            </label>
+            <input
+              className="input appearance-none border w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+              type="text"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-white text-sm mb-2" htmlFor="post">
+              Post
+            </label>
+            <input
+              className="input appearance-none border w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+              type="text"
+              id="post"
+              value={post}
+              onChange={(e) => setPost(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-white text-sm mb-2" htmlFor="company">
+              Company
+            </label>
+            <input
+              className="input appearance-none border w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline"
+              type="text"
+              id="company"
+              value={company}
+              onChange={(e) => setCompany(e.target.value)}
+              required
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block text-white text-sm mb-2" htmlFor="text">
+              Text
+            </label>
+            <textarea
+              className="input appearance-none border w-full py-2 px-3 text-white leading-tight focus:outline-none focus:shadow-outline h-32"
+              id="text"
+              value={text}
+              onChange={(e) => setText(e.target.value)}
+              required
+            />
+          </div>
+          <div className="flex justify-center">
+            <button className="btn bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+              Submit Review
+            </button>
+          </div>
+        </form>
+      </div>
     </>
   );
 };
