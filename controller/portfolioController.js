@@ -1,4 +1,5 @@
 import Portfolio from '../models/portfolioModel.js';
+import cloudinary from 'cloudinary';
 
 export const createPortfolioItem = async (req, res) => {
   console.log('Request received to create portfolio item');
@@ -9,14 +10,27 @@ export const createPortfolioItem = async (req, res) => {
       return res.status(400).json({ msg: "File is required" });
     }
 
-    const file = `https://${req.get('host')}/uploads/${req.file.filename}`;
+    // Upload file to Cloudinary
+    const file = req.file.path;
+    const result = await cloudinary.v2.uploader.upload(file);
+    const imageUrl = result.secure_url;
+    const imagePublicId = result.public_id;
 
     if (!title || !text || !date || !status) {
       console.error('Missing required fields', { title, text, date, status });
       return res.status(400).json({ msg: "All fields are required" });
     }
 
-    const portfolioItem = new Portfolio({ title, text, date, status, file, colorful, weburl });
+    const portfolioItem = new Portfolio({
+      title,
+      text,
+      date,
+      status,
+      file: imageUrl,
+      imagePublicId,
+      colorful,
+      weburl,
+    });
 
     const savedItem = await portfolioItem.save();
 
@@ -27,6 +41,7 @@ export const createPortfolioItem = async (req, res) => {
     res.status(500).json({ msg: 'Failed to save portfolio item', error: error.message });
   }
 };
+
 
 export const getAllPortfolioItems = async (req, res) => {
   try {
@@ -41,23 +56,10 @@ export const getAllPortfolioItems = async (req, res) => {
   }
 };
 
-export const getPortfolioItemById = async (req, res) => {
-  try {
-    const portfolioItem = await Portfolio.findById(req.params.id);
-    if (!portfolioItem) {
-      return res.status(404).json({ msg: "Portfolio item not found" });
-    }
-    res.status(200).json(portfolioItem);
-  } catch (error) {
-    console.error('Error getting portfolio item by ID:', error);
-    res.status(500).json({ msg: 'Server error', error: error.message });
-  }
-};
-
 export const updatePortfolioItem = async (req, res) => {
   try {
     const { title, text, date, status, visibility, colorful, weburl } = req.body;
-    let file = req.body.file; // Assuming 'file' is the field name for the image in FormData
+    let file = req.body.file;
 
     // Check if portfolio item exists
     const portfolioItem = await Portfolio.findById(req.params.id);
@@ -67,7 +69,16 @@ export const updatePortfolioItem = async (req, res) => {
 
     // Proceed with updating the portfolio item
     if (req.file) {
-      file = `https://${req.get('host')}/uploads/${req.file.filename}`;
+      // Delete the old image from Cloudinary
+      if (portfolioItem.imagePublicId) {
+        await cloudinary.v2.uploader.destroy(portfolioItem.imagePublicId);
+      }
+
+      // Upload the new file to Cloudinary
+      const newFile = req.file.path;
+      const result = await cloudinary.v2.uploader.upload(newFile);
+      file = result.secure_url;
+      portfolioItem.imagePublicId = result.public_id;
     }
 
     const updatedData = await Portfolio.findByIdAndUpdate(req.params.id, {
@@ -76,7 +87,7 @@ export const updatePortfolioItem = async (req, res) => {
       date,
       status,
       visibility,
-      file, // Update the file field if a new image was uploaded
+      file,
       colorful,
       weburl,
     }, { new: true });
@@ -93,6 +104,18 @@ export const updatePortfolioItem = async (req, res) => {
 };
 
 
+export const getPortfolioItemById = async (req, res) => {
+  try {
+    const portfolioItem = await Portfolio.findById(req.params.id);
+    if (!portfolioItem) {
+      return res.status(404).json({ msg: "Portfolio item not found" });
+    }
+    res.status(200).json(portfolioItem);
+  } catch (error) {
+    console.error('Error getting portfolio item by ID:', error);
+    res.status(500).json({ msg: 'Server error', error: error.message });
+  }
+};
 
 export const deletePortfolioItem = async (req, res) => {
   try {
