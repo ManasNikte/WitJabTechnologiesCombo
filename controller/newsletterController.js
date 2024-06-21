@@ -12,8 +12,8 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const sendWelcomeEmail = async (email) => {
-  const unsubscribeLink = `https://witjabtechnologiescombo.onrender.com/unsubscribe/${encodeURIComponent(email)}`;
+const sendWelcomeEmail = async (email, id) => {
+  const unsubscribeLink = `https://witjabtechnologiescombo.onrender.com/unsubscribe/${id}`;
 
   const mailOptions = {
     from: '"WitJab Technologies" <manas.nikte@irrecordings.com>', // sender address
@@ -36,6 +36,7 @@ const sendWelcomeEmail = async (email) => {
     await transporter.sendMail(mailOptions);
   } catch (error) {
     console.error('Error sending welcome email:', error);
+    throw new Error('Failed to send welcome email');
   }
 };
 
@@ -56,53 +57,59 @@ export const subscribeNewsletter = async (req, res) => {
     const newNewsletter = new Newsletter({ email });
     const savedNewsletter = await newNewsletter.save();
 
-    // Send welcome email
-    await sendWelcomeEmail(email);
+    // Send welcome email with unsubscribe link
+    await sendWelcomeEmail(email, savedNewsletter._id);
 
-    res.status(201).json(savedNewsletter);
+    // Respond with the saved newsletter object including its ID
+    res.status(201).json({
+      id: savedNewsletter._id,
+      email: savedNewsletter.email,
+      createdAt: savedNewsletter.createdAt,
+    });
+
+  } catch (error) {
+    console.error('Error subscribing to newsletter:', error);
+    res.status(500).json({ msg: error.message });
+  }
+};
+
+export const getAllNewslettersSubscribers = async (req, res) => {
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10; // Adjust the limit as per your requirement
+  const skip = (page - 1) * limit;
+
+  try {
+    const newsletters = await Newsletter.find()
+      .sort({ createdAt: -1 }) // Sort by createdAt in descending order (latest first)
+      .skip(skip)
+      .limit(limit);
+
+    const totalDocuments = await Newsletter.countDocuments();
+    const totalPages = Math.ceil(totalDocuments / limit);
+
+    res.status(200).json({ newsletters, totalPages });
   } catch (error) {
     res.status(500).json({ msg: error.message });
   }
 };
 
-
-export const getAllNewslettersSubscribers = async (req, res) => {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 10; // Adjust the limit as per your requirement
-    const skip = (page - 1) * limit;
-  
-    try {
-      const newsletters = await Newsletter.find()
-        .sort({ createdAt: -1 }) // Sort by createdAt in descending order (latest first)
-        .skip(skip)
-        .limit(limit);
-  
-      const totalDocuments = await Newsletter.countDocuments();
-      const totalPages = Math.ceil(totalDocuments / limit);
-  
-      res.status(200).json({ newsletters, totalPages });
-    } catch (error) {
-      res.status(500).json({ msg: error.message });
+export const unsubscribeNewsletter = async (req, res) => {
+  try {
+    const { id } = req.params; // Assuming the ID is passed as a URL parameter
+    if (!id) {
+      return res.status(400).json({ msg: "ID parameter is required" });
     }
-  };
 
-  export const unsubscribeNewsletter = async (req, res) => {
-    try {
-      const { id } = req.params; // Assuming the ID is passed as a URL parameter
-      if (!id) {
-        return res.status(400).json({ msg: "ID parameter is required" });
-      }
-  
-      // Find the subscriber by ID and delete
-      const deletedSubscriber = await Newsletter.findByIdAndDelete(id);
-      
-      if (!deletedSubscriber) {
-        return res.status(404).json({ msg: 'Newsletter subscription not found' });
-      }
-  
-      res.status(200).json({ msg: 'Successfully unsubscribed' });
-    } catch (error) {
-      console.error('Error unsubscribing:', error);
-      res.status(500).json({ msg: 'Failed to unsubscribe' });
+    // Find the subscriber by ID and delete
+    const deletedSubscriber = await Newsletter.findByIdAndDelete(id);
+
+    if (!deletedSubscriber) {
+      return res.status(404).json({ msg: 'Newsletter subscription not found' });
     }
-  };
+
+    res.status(200).json({ msg: 'Successfully unsubscribed' });
+  } catch (error) {
+    console.error('Error unsubscribing:', error);
+    res.status(500).json({ msg: 'Failed to unsubscribe' });
+  }
+};

@@ -3,13 +3,13 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 const Unsubscribe = () => {
-  const { email } = useParams(); // Use useParams hook to get route parameters
+  const { id } = useParams(); // Use useParams hook to get route parameters
   const [subscribedUser, setSubscribedUser] = useState(null);
 
   useEffect(() => {
     const fetchSubscriptionDetails = async () => {
       try {
-        const response = await axios.get(`https://witjabtechnologiescombo.onrender.com/newsletter/${email}`);
+        const response = await axios.get(`https://witjabtechnologiescombo.onrender.com/newsletter/${id}`);
         setSubscribedUser(response.data); // Assuming server returns details of subscribed user
       } catch (error) {
         console.error('Error fetching subscription details:', error);
@@ -17,7 +17,7 @@ const Unsubscribe = () => {
     };
 
     fetchSubscriptionDetails();
-  }, [email]);
+  }, [id]);
 
   const handleUnsubscribe = async () => {
     if (!subscribedUser) {
@@ -28,7 +28,7 @@ const Unsubscribe = () => {
     const confirmed = window.confirm(`Are you sure you want to unsubscribe ${subscribedUser.email}?`);
     if (confirmed) {
       try {
-        await axios.delete(`https://witjabtechnologiescombo.onrender.com/newsletterunsubscribe/${subscribedUser._id}`);
+        await axios.delete(`https://witjabtechnologiescombo.onrender.com/newsletterunsubscribe/${id}`);
         console.log('Successfully unsubscribed');
       } catch (error) {
         console.error('Error unsubscribing:', error);
