@@ -51,7 +51,7 @@ const App = () => {
       element: <Login />,
     },
     {
-      path: "/unsubscribe/:email",
+      path: "/unsubscribe/:id",
       element: <Unsubscribe />,
     },
     {
