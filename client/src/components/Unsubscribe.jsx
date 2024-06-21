@@ -9,8 +9,7 @@ const Unsubscribe = () => {
   useEffect(() => {
     const fetchSubscriptionDetails = async () => {
       try {
-        const decodedEmail = decodeURIComponent(email); // Decode the email parameter
-        const response = await axios.get(`https://witjabtechnologiescombo.onrender.com/newsletter/${decodedEmail}`);
+        const response = await axios.get(`https://witjabtechnologiescombo.onrender.com/newsletter/${email}`);
         setSubscribedUser(response.data); // Assuming server returns details of subscribed user
       } catch (error) {
         console.error('Error fetching subscription details:', error);
