@@ -1,27 +1,51 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 const Unsubscribe = () => {
   const { email } = useParams(); // Use useParams hook to get route parameters
+  const [subscribedUser, setSubscribedUser] = useState(null);
 
   useEffect(() => {
-    const unsubscribe = async () => {
+    const fetchSubscriptionDetails = async () => {
       try {
-        await axios.delete(`https://witjabtechnologiescombo.onrender.com/newsletterunsubscribe/${encodeURIComponent(email)}`);
+        const response = await axios.get(`https://witjabtechnologiescombo.onrender.com/newsletter/${encodeURIComponent(email)}`);
+        setSubscribedUser(response.data); // Assuming server returns details of subscribed user
+      } catch (error) {
+        console.error('Error fetching subscription details:', error);
+      }
+    };
+
+    fetchSubscriptionDetails();
+  }, [email]);
+
+  const handleUnsubscribe = async () => {
+    if (!subscribedUser) {
+      console.error('No subscription details found.');
+      return;
+    }
+
+    const confirmed = window.confirm(`Are you sure you want to unsubscribe ${subscribedUser.email}?`);
+    if (confirmed) {
+      try {
+        await axios.delete(`https://witjabtechnologiescombo.onrender.com/newsletterunsubscribe/${subscribedUser._id}`);
         console.log('Successfully unsubscribed');
       } catch (error) {
         console.error('Error unsubscribing:', error);
       }
-    };
-
-    unsubscribe();
-  }, [email]);
+    }
+  };
 
   return (
     <div style={{ fontFamily: 'Arial, sans-serif', textAlign: 'center', marginTop: '50px' }}>
-      <h2>You have been unsubscribed.</h2>
-      <p>We are sorry to see you go.</p>
+      <h2>You are about to unsubscribe.</h2>
+      {subscribedUser && (
+        <>
+          <p>You are subscribed with email: {subscribedUser.email}</p>
+          <button onClick={handleUnsubscribe}>Confirm Unsubscribe</button>
+        </>
+      )}
+      {!subscribedUser && <p>Loading...</p>}
     </div>
   );
 };
