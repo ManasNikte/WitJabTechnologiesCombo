@@ -20,7 +20,7 @@ import Profile from "./dashboardComponents/Profile/Profile";
 import SideNav from "./dashboardComponents/SideNav/SideNav";
 import Dashboard from "./dashboardComponents/Home/Dashboard";
 import EditReview from "./dashboardComponents/Reviews/EditReview";
-import Review from "./components/Review";
+import Review from "./components/Reviews";
 import AddReview from "./dashboardComponents/Reviews/AddReview";
 
 const App = () => {
