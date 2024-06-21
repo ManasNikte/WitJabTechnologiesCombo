@@ -39,6 +39,32 @@ const sendEmailNotification = async (name, email, subject, message) => {
     });
 
     console.log('Message sent: %s', info.messageId);
+
+    // Send thank you email to the user
+    let thankYouContent = `
+      <html>
+        <body style="font-family: Arial, sans-serif; padding: 20px; text-align: center;">
+          <img src="https://res.cloudinary.com/deutek0w7/image/upload/v1718981832/uzmpjtmirqfueoewdbhb.png" alt="WitJab Technologies" style="width: 150px; margin-bottom: 20px;">
+          <h2 style="color: #333;">Thank You for Reaching Out!</h2>
+          <p>Dear ${name},</p>
+          <p>Thank you for contacting WitJab Technologies. We have received your message and our team will respond to you soon.</p>
+          <p>Your message:</p>
+          <blockquote style="font-style: italic; color: #555;">${message}</blockquote>
+          <p>Best Regards,<br>WitJab Technologies Team</p>
+          <p style="margin-top: 20px; color: #888;">You are receiving this email because you contacted WitJab Technologies.</p>
+        </body>
+      </html>
+    `;
+
+    await transporter.sendMail({
+      from: 'WitJab Technologies <manas.nikte@irrecordings.com>',
+      to: email,
+      subject: 'Thank You for Contacting WitJab Technologies',
+      html: thankYouContent,
+    });
+
+    console.log('Thank you email sent to: %s', email);
+
   } catch (error) {
     console.error('Error sending email:', error);
   }
@@ -71,25 +97,22 @@ export const newContactSubmission = async (req, res) => {
   }
 };
 
-
-
-
+// Other controller functions
 export const getAllContacts = async (req, res) => {
-    try {
-      const { page = 1, limit = 7 } = req.query;
-      const skip = (page - 1) * limit;
-  
-      const [submissions, totalSubmissions] = await Promise.all([
-        Contact.find().sort({ createdAt: -1 }).skip(skip).limit(Number(limit)),
-        Contact.countDocuments()
-      ]);
-  
-      const totalPages = Math.ceil(totalSubmissions / limit);
-  
-      res.status(200).json({ submissions, totalPages });
-    } catch (error) {
-      console.error('Error fetching contact submissions:', error);
-      res.status(500).json({ msg: 'Server error', error: error.message });
-    }
-  };
-  
+  try {
+    const { page = 1, limit = 7 } = req.query;
+    const skip = (page - 1) * limit;
+
+    const [submissions, totalSubmissions] = await Promise.all([
+      Contact.find().sort({ createdAt: -1 }).skip(skip).limit(Number(limit)),
+      Contact.countDocuments()
+    ]);
+
+    const totalPages = Math.ceil(totalSubmissions / limit);
+
+    res.status(200).json({ submissions, totalPages });
+  } catch (error) {
+    console.error('Error fetching contact submissions:', error);
+    res.status(500).json({ msg: 'Server error', error: error.message });
+  }
+};
