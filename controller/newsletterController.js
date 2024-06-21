@@ -113,3 +113,45 @@ export const unsubscribeNewsletter = async (req, res) => {
     res.status(500).json({ msg: 'Failed to unsubscribe' });
   }
 };
+
+export const GetSubscribeNewsletterById = async (req, res) => {
+  try {
+    const { id } = req.params; // Assuming the ID is passed as a URL parameter
+    if (!id) {
+      return res.status(400).json({ msg: "ID parameter is required" });
+    }
+
+    // Find the subscriber by ID
+    const newsletter = await Newsletter.findById(id);
+
+    if (!newsletter) {
+      return res.status(404).json({ msg: 'Newsletter subscription not found' });
+    }
+
+    res.status(200).json(newsletter);
+  } catch (error) {
+    console.error('Error fetching newsletter:', error);
+    res.status(500).json({ msg: 'Failed to fetch newsletter' });
+  }
+}
+
+export const GetSubscribeNewsletterByEmail = async (req, res) => {
+  try {
+    const { email } = req.params; // Assuming the email is passed as a URL parameter
+    if (!email) {
+      return res.status(400).json({ msg: "Email parameter is required" });
+    }
+
+    // Find the subscriber by email
+    const newsletter = await Newsletter.findOne({ email });
+
+    if (!newsletter) {
+      return res.status(404).json({ msg: 'Newsletter subscription not found' });
+    }
+
+    res.status(200).json(newsletter);
+  } catch (error) {
+    console.error('Error fetching newsletter:', error);
+    res.status(500).json({ msg: 'Failed to fetch newsletter' });
+  }
+};

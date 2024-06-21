@@ -9,7 +9,7 @@ const Unsubscribe = () => {
   useEffect(() => {
     const fetchSubscriptionDetails = async () => {
       try {
-        const response = await axios.get(`https://witjabtechnologiescombo.onrender.com/newsletter/${id}`);
+        const response = await axios.get(`https://witjabtechnologiescombo.onrender.com/newsletterbyid/${id}`);
         setSubscribedUser(response.data); // Assuming server returns details of subscribed user
       } catch (error) {
         console.error('Error fetching subscription details:', error);
@@ -39,6 +39,7 @@ const Unsubscribe = () => {
   return (
     <div style={{ fontFamily: 'Arial, sans-serif', textAlign: 'center', marginTop: '50px' }}>
       <h2>You are about to unsubscribe.</h2>
+        console.log({id});
       {subscribedUser && (
         <>
           <p>You are subscribed with email: {subscribedUser.email}</p>

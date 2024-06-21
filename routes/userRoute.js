@@ -5,7 +5,7 @@ import { authMiddleware } from '../middleware/authMiddleware.js';
 import upload from '../middleware/upload.js';
 import { newContactSubmission, getAllContacts } from '../controller/contactController.js';
 import { addReview, getReviews, getReviewById, updateReviewById } from '../controller/reviewController.js';
-import { subscribeNewsletter, getAllNewslettersSubscribers, unsubscribeNewsletter } from '../controller/newsletterController.js';
+import { subscribeNewsletter, getAllNewslettersSubscribers, unsubscribeNewsletter, GetSubscribeNewsletterById, GetSubscribeNewsletterByEmail } from '../controller/newsletterController.js';
 const router = express.Router();
 
 // Public routes
@@ -27,6 +27,8 @@ router.put("/updatereview/:id", updateReviewById);
 
 // Newsletter Routes
 router.post("/newsletter", subscribeNewsletter);
+router.post("/newsletterbyid/:id", GetSubscribeNewsletterById);
+router.post("/newsletterbyemail/:email", GetSubscribeNewsletterByEmail);
 router.delete("/newsletterunsubscribe/:id", unsubscribeNewsletter);
 router.get("/newsletter", authMiddleware, getAllNewslettersSubscribers);
 
