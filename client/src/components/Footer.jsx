@@ -2,27 +2,70 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Section from "./Section";
 import { socials } from "../constants";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Footer = () => {
   const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
     if (!emailPattern.test(email)) {
-      setMessage('Please enter a valid email address.');
+      toast.error('Please enter a valid email address.', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
       return;
     }
 
     try {
       await axios.post('https://witjabtechnologiescombo.onrender.com/api/newsletter', { email });
-      setMessage('Thank you for subscribing!');
+      toast.success('Thank you for subscribing!', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
       setEmail('');
     } catch (error) {
       console.error('Error subscribing to newsletter:', error);
-      setMessage('An error occurred. Please try again later.');
+
+      // Check for specific error message
+      if (error.response && error.response.data && error.response.data.msg === 'Email already exists') {
+        toast.error('This email is already subscribed.', {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+          theme: "colored",
+        });
+      } else {
+        toast.error('This email is already subscribed.', {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+          theme: "colored",
+        });
+      }
     }
   };
 
@@ -49,7 +92,6 @@ const Footer = () => {
               Subscribe
             </button>
           </form>
-          {message && <p className="mt-4 text-center text-sm">{message}</p>}
         </div>
         <div className="flex flex-col sm:flex-row justify-between items-center gap-10">
           <p className="text-center text-sm text-n-4 sm:order-2 lg:order-1">
@@ -77,6 +119,7 @@ const Footer = () => {
           </a>
         </div>
       </div>
+      <ToastContainer />
     </Section>
   );
 };

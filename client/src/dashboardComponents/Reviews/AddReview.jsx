@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddReview = () => {
   const navigate = useNavigate();
@@ -16,10 +18,31 @@ const AddReview = () => {
     try {
       const newReview = { stars, name, post, company, text };
       await axios.post('https://witjabtechnologiescombo.onrender.com/api/addreview', newReview);
-      navigate('/'); // Navigate back to dashboard after successful submission
+      toast.success('Review added successfully!', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
+      setTimeout(() => {
+        navigate('/'); // Navigate back to the homepage after 3 seconds
+      }, 3000);
     } catch (error) {
       console.error('Error adding review:', error);
-      // Handle error scenarios, e.g., display an error message
+      toast.error('Failed to add review. Please try again.', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
     }
   };
 
@@ -56,7 +79,6 @@ const AddReview = () => {
                   onClick={() => handleStarClick(index)}
                   onMouseEnter={() => handleMouseEnter(index)}
                   onMouseLeave={handleMouseLeave}
-                  required
                 >
                   <path d="M12 .587l3.668 7.568L24 9.763l-6 5.882 1.418 8.268L12 19.424l-7.418 4.489L6 15.645 0 9.763l8.332-1.608z" />
                 </svg>
@@ -120,6 +142,7 @@ const AddReview = () => {
             </button>
           </div>
         </form>
+        <ToastContainer />
       </div>
     </>
   );

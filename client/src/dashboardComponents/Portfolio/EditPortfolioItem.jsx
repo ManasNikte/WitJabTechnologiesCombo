@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const EditPortfolioItem = () => {
   const token = localStorage.getItem('token');
@@ -24,7 +26,7 @@ const EditPortfolioItem = () => {
         setTitle(response.data.title);
         setDescription(response.data.text);
         setImage(response.data.file);
-        setWeburl(response.data.weburl || ''); // Set weburl from API response
+        setWeburl(response.data.weburl || '');
         setVisibility(response.data.visibility || 'public');
         setDate(response.data.date || '');
         setStatus(response.data.status || '');
@@ -82,9 +84,29 @@ const EditPortfolioItem = () => {
         },
       });
 
-      navigate('/dashboard/portfolio');
+      toast.success('Portfolio item updated successfully!', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+        onClose: () => navigate('/dashboard/portfolio')
+      });
     } catch (error) {
       console.error('Error updating portfolio item:', error);
+      toast.error('Failed to update portfolio item. Please try again later.', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
     }
   };
 
@@ -96,9 +118,29 @@ const EditPortfolioItem = () => {
         },
       });
 
-      navigate('/dashboard/portfolio');
+      toast.success('Portfolio item deleted successfully!', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+        onClose: () => navigate('/dashboard/portfolio')
+      });
     } catch (error) {
       console.error('Error deleting portfolio item:', error);
+      toast.error('Failed to delete portfolio item. Please try again later.', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
     }
   };
 
@@ -215,6 +257,7 @@ const EditPortfolioItem = () => {
       >
         Delete Item
       </button>
+      <ToastContainer />
     </div>
   );
 };

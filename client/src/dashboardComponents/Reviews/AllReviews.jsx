@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AllReviews = () => {
   const navigate = useNavigate();
@@ -24,11 +26,29 @@ const AllReviews = () => {
     navigator.clipboard.writeText(inviteLink)
       .then(() => {
         console.log('Invite link copied to clipboard:', inviteLink);
-        // Optionally show a success message or perform other actions
+        toast.success('Invite link copied to clipboard!', {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+          theme: "colored",
+        });
       })
       .catch((error) => {
         console.error('Error copying invite link:', error);
-        // Handle error scenarios, e.g., display an error message
+        toast.error('Failed to copy invite link. Please try again.', {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+          theme: "colored",
+        });
       });
   };
 
@@ -83,6 +103,7 @@ const AllReviews = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

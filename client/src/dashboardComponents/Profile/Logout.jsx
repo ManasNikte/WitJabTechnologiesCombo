@@ -6,8 +6,10 @@ const Logout = () => {
 
   useEffect(() => {
     localStorage.removeItem('token');
-    navigate('/login');
+    navigate('/login?logout=true');
   }, [navigate]);
+
+  return null; // No need to render anything
 };
 
 export default Logout;

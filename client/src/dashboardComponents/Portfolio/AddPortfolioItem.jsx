@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AddPortfolioItem = () => {
-  const navigate = useNavigate(); // useNavigate hook for navigation
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     title: '',
     text: '',
@@ -31,7 +33,6 @@ const AddPortfolioItem = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('Form data before submission:', formData);
 
     const token = localStorage.getItem('token');
     if (!token) {
@@ -66,9 +67,29 @@ const AddPortfolioItem = () => {
         colorful: false,
         file: null
       });
-      navigate('/dashboard/portfolio');
+      toast.success('Portfolio item added successfully!', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+        onClose: () => navigate('/dashboard/portfolio')
+      });
     } catch (error) {
       console.error('Error adding portfolio item:', error);
+      toast.error('Failed to add portfolio item. Please try again later.', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
     }
   };
 
@@ -158,6 +179,7 @@ const AddPortfolioItem = () => {
           Add Portfolio Item
         </button>
       </form>
+      <ToastContainer />
     </div>
   );
 };

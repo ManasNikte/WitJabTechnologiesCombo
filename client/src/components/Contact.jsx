@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Section from "./Section";
 import { socials } from "../constants";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -9,6 +11,7 @@ const Contact = () => {
     subject: '',
     message: ''
   });
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -28,21 +31,42 @@ const Contact = () => {
 
       if (response.ok) {
         const result = await response.json();
-        alert('Message sent successfully');
-        // Optionally reset the form
-        setFormData({
-          name: '',
-          email: '',
-          subject: '',
-          message: ''
+        setIsSubmitted(true);
+        toast.success('Message sent successfully', {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+          theme: "colored",
         });
       } else {
         const error = await response.json();
-        alert(`Failed to send message: ${error.msg}`);
+        toast.error(`Failed to send message: ${error.msg}`, {
+          position: "top-center",
+          autoClose: 3000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: false,
+          progress: undefined,
+          theme: "colored",
+        });
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      alert('An error occurred while sending your message');
+      toast.error('An error occurred while sending your message', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
     }
   };
 
@@ -89,81 +113,88 @@ const Contact = () => {
             </div>
           </div>
           <div className="w-full lg:w-1/2 lg:pr-10 mb-10 lg:mb-0">
-            <form className="bg-gray-800 p-8 rounded-lg shadow-lg" onSubmit={handleSubmit}>
-              <div className="mb-6">
-                <label
-                  className="block mb-2 text-sm font-medium text-white"
-                  htmlFor="name"
-                >
-                  Name:
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="w-full p-3 border border-gray-600 bg-gray-700 text-white rounded-lg placeholder-gray-400"
-                  placeholder="Your Name"
-                />
+            {isSubmitted ? (
+              <div className="bg-green-600 text-white p-4 rounded-lg shadow-lg text-center">
+                Contact form submitted successfully
               </div>
-              <div className="mb-6">
-                <label
-                  className="block mb-2 text-sm font-medium text-white"
-                  htmlFor="email"
+            ) : (
+              <form className="bg-gray-800 p-8 rounded-lg shadow-lg" onSubmit={handleSubmit}>
+                <div className="mb-6">
+                  <label
+                    className="block mb-2 text-sm font-medium text-white"
+                    htmlFor="name"
+                  >
+                    Name:
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="w-full p-3 border border-gray-600 bg-gray-700 text-white rounded-lg placeholder-gray-400"
+                    placeholder="Your Name"
+                  />
+                </div>
+                <div className="mb-6">
+                  <label
+                    className="block mb-2 text-sm font-medium text-white"
+                    htmlFor="email"
+                  >
+                    Email:
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full p-3 border border-gray-600 bg-gray-700 text-white rounded-lg placeholder-gray-400"
+                    placeholder="Your Email"
+                  />
+                </div>
+                <div className="mb-6">
+                  <label
+                    className="block mb-2 text-sm font-medium text-white"
+                    htmlFor="subject"
+                  >
+                    Subject:
+                  </label>
+                  <input
+                    type="text"
+                    id="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
+                    className="w-full p-3 border border-gray-600 bg-gray-700 text-white rounded-lg placeholder-gray-400"
+                    placeholder="Your Subject"
+                  />
+                </div>
+                <div className="mb-6">
+                  <label
+                    className="block mb-2 text-sm font-medium text-white"
+                    htmlFor="message"
+                  >
+                    Message:
+                  </label>
+                  <textarea
+                    id="message"
+                    value={formData.message}
+                    onChange={handleChange}
+                    className="w-full p-3 border border-gray-600 bg-gray-700 text-white rounded-lg placeholder-gray-400"
+                    rows="4"
+                    placeholder="Your Message"
+                  ></textarea>
+                </div>
+                <button
+                  type="submit"
+                  className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
                 >
-                  Email:
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="w-full p-3 border border-gray-600 bg-gray-700 text-white rounded-lg placeholder-gray-400"
-                  placeholder="Your Email"
-                />
-              </div>
-              <div className="mb-6">
-                <label
-                  className="block mb-2 text-sm font-medium text-white"
-                  htmlFor="subject"
-                >
-                  Subject:
-                </label>
-                <input
-                  type="text"
-                  id="subject"
-                  value={formData.subject}
-                  onChange={handleChange}
-                  className="w-full p-3 border border-gray-600 bg-gray-700 text-white rounded-lg placeholder-gray-400"
-                  placeholder="Your Subject"
-                />
-              </div>
-              <div className="mb-6">
-                <label
-                  className="block mb-2 text-sm font-medium text-white"
-                  htmlFor="message"
-                >
-                  Message:
-                </label>
-                <textarea
-                  id="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  className="w-full p-3 border border-gray-600 bg-gray-700 text-white rounded-lg placeholder-gray-400"
-                  rows="4"
-                  placeholder="Your Message"
-                ></textarea>
-              </div>
-              <button
-                type="submit"
-                className="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
-              >
-                Send Message
-              </button>
-            </form>
+                  Send Message
+                </button>
+              </form>
+            )}
           </div>
         </div>
       </div>
+      <ToastContainer />
     </Section>
   );
 };

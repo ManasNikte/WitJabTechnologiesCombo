@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
-import SideNav from '../SideNav/SideNav'; // Import SideNav component
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const EditReview = () => {
   const { id } = useParams();
@@ -38,10 +39,31 @@ const EditReview = () => {
     try {
       const updatedReview = { stars, name, post, company, text, visibility };
       await axios.put(`https://witjabtechnologiescombo.onrender.com/api/updatereview/${id}`, updatedReview);
-      navigate('/dashboard'); // Navigate back to dashboard after successful edit
+      toast.success('Review updated successfully!', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
+      setTimeout(() => {
+        navigate('/dashboard'); // Navigate back to dashboard after the toast is displayed for 3 seconds
+      }, 3000);
     } catch (error) {
       console.error('Error updating review:', error);
-      // Handle error scenarios, e.g., display an error message
+      toast.error('Failed to update review. Please try again.', {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        progress: undefined,
+        theme: "colored",
+      });
     }
   };
 
@@ -135,6 +157,7 @@ const EditReview = () => {
             </button>
           </div>
         </form>
+        <ToastContainer />
       </div>
     </div>
   );
