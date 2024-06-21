@@ -4,7 +4,7 @@ import { createPortfolioItem, getAllPortfolioItems, getPortfolioItemById, update
 import { authMiddleware } from '../middleware/authMiddleware.js';
 import upload from '../middleware/upload.js';
 import { newContactSubmission, getAllContacts, getReviewById, updateReviewById } from '../controller/contactController.js';
-import { addReview, getReviews } from '../controllers/reviewController.js';
+import { addReview, getReviews } from '../controller/reviewController.js';
 const router = express.Router();
 
 // Public routes
