@@ -49,8 +49,8 @@ const App = () => {
       element: <Login />,
     },
     {
-      path: "newreview", 
-      element: <AddReview /> 
+      path: "/newreview", 
+      element: <><Header /><AddReview /><Contact /><Footer /></>
     },
     {
       path: "/logout",

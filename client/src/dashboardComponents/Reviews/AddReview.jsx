@@ -24,11 +24,11 @@ const AddReview = () => {
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold text-white mb-4">Add New Review</h1>
-      <form onSubmit={handleSubmit}>
+    <div className="container mx-auto p-4 bg-gray-800 text-white">
+      <h1 className="text-2xl font-bold mb-4">Add New Review</h1>
+      <form onSubmit={handleSubmit} className="bg-gray-700 shadow-md rounded px-8 pt-6 pb-8 mb-4">
         <div className="mb-4">
-          <label className="block text-gray-400 text-sm mb-2" htmlFor="stars">
+          <label className="block text-sm font-bold mb-2" htmlFor="stars">
             Stars
           </label>
           <input
@@ -41,7 +41,7 @@ const AddReview = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-400 text-sm mb-2" htmlFor="name">
+          <label className="block text-sm font-bold mb-2" htmlFor="name">
             Name
           </label>
           <input
@@ -54,7 +54,7 @@ const AddReview = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-400 text-sm mb-2" htmlFor="post">
+          <label className="block text-sm font-bold mb-2" htmlFor="post">
             Post
           </label>
           <input
@@ -67,7 +67,7 @@ const AddReview = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-400 text-sm mb-2" htmlFor="company">
+          <label className="block text-sm font-bold mb-2" htmlFor="company">
             Company
           </label>
           <input
@@ -80,7 +80,7 @@ const AddReview = () => {
           />
         </div>
         <div className="mb-4">
-          <label className="block text-gray-400 text-sm mb-2" htmlFor="text">
+          <label className="block text-sm font-bold mb-2" htmlFor="text">
             Text
           </label>
           <textarea
@@ -92,7 +92,7 @@ const AddReview = () => {
           />
         </div>
         <div className="flex justify-end">
-          <button className="bg-green-500 text-white px-4 py-2 rounded" type="submit">
+          <button className="btn" type="submit">
             Submit Review
           </button>
         </div>

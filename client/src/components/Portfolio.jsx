@@ -43,7 +43,7 @@ const Portfolio = () => {
   return (
     <Section className="overflow-hidden" id="portfolio">
       <div className="container md:pb-10">
-        <Heading tag="Our Work" title="PORTFOLIO" />
+        <Heading tag="Our Best Work" title="PORTFOLIO" />
 
         <div className="relative grid gap-6 md:grid-cols-2 md:gap-4 md:pb-[7rem]">
           {portfolioItems.map((item) => {
