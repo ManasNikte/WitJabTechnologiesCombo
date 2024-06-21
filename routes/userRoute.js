@@ -3,8 +3,8 @@ import { createUser, getAllUsers, getUserById, updateUser, deleteUser, login, lo
 import { createPortfolioItem, getAllPortfolioItems, getPortfolioItemById, updatePortfolioItem, deletePortfolioItem } from '../controller/portfolioController.js';
 import { authMiddleware } from '../middleware/authMiddleware.js';
 import upload from '../middleware/upload.js';
-import { newContactSubmission, getAllContacts, getReviewById, updateReviewById } from '../controller/contactController.js';
-import { addReview, getReviews } from '../controller/reviewController.js';
+import { newContactSubmission, getAllContacts } from '../controller/contactController.js';
+import { addReview, getReviews, getReviewById, updateReviewById } from '../controller/reviewController.js';
 const router = express.Router();
 
 // Public routes
