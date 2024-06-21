@@ -85,15 +85,18 @@ export const getAllNewslettersSubscribers = async (req, res) => {
     }
   };
 
-export const unsubscribeNewsletter = async (req, res) => {
-  try {
-    const deletedNewsletter = await Newsletter.findOneAndDelete({ email });
-    if (!deletedNewsletter) {
-      return res.status(404).json({ msg: 'Newsletter subscription not found' });
+  export const unsubscribeNewsletter = async (req, res) => {
+    try {
+      const { email } = req.params; // Use req.params to get URL parameters
+      const deletedNewsletter = await Newsletter.findOneAndDelete({ email });
+  
+      if (!deletedNewsletter) {
+        return res.status(404).json({ msg: 'Newsletter subscription not found' });
+      }
+  
+      res.status(200).json({ msg: 'Successfully unsubscribed' });
+    } catch (error) {
+      console.error('Error unsubscribing:', error);
+      res.status(500).json({ msg: 'Failed to unsubscribe' });
     }
-    res.status(200).json({ msg: 'Successfully unsubscribed' });
-  } catch (error) {
-    console.error('Error unsubscribing:', error);
-    res.status(500).json({ msg: 'Failed to unsubscribe' });
-  }
-};
+  };
