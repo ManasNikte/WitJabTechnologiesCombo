@@ -27,8 +27,8 @@ router.put("/updatereview/:id", updateReviewById);
 
 // Newsletter Routes
 router.post("/newsletter", subscribeNewsletter);
-router.post("/newsletterbyid/:id", GetSubscribeNewsletterById);
-router.post("/newsletterbyemail/:email", GetSubscribeNewsletterByEmail);
+router.get("/newsletterbyid/:id", GetSubscribeNewsletterById);
+router.get("/newsletterbyemail/:email", GetSubscribeNewsletterByEmail);
 router.delete("/newsletterunsubscribe/:id", unsubscribeNewsletter);
 router.get("/newsletter", authMiddleware, getAllNewslettersSubscribers);
 
