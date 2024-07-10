@@ -19,7 +19,9 @@ const Contact = () => {
   const S = 'someValue';
 
   // Initialize m with some initial data
-  m.set(T, { toggle: null });
+  if (!m.has(T)) {
+    m.set(T, { toggle: null });
+  }
 
   const handleChange = (e) => {
     const { id, value } = e.target;
