@@ -13,6 +13,14 @@ const Contact = () => {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+  // Define m, T, and S
+  const m = new Map();
+  const T = 'someKey';
+  const S = 'someValue';
+
+  // Initialize m with some initial data
+  m.set(T, { toggle: null });
+
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [id]: value }));
@@ -69,6 +77,17 @@ const Contact = () => {
       });
     }
   };
+
+  // Debugging logs
+  console.log('m:', m);
+  console.log('T:', T);
+  console.log('m.get(T):', m.get(T));
+
+  if (m.get(T)) {
+    m.get(T).toggle = S;
+  } else {
+    console.error('m.get(T) is undefined');
+  }
 
   return (
     <Section id="contact" crosses={true}>
