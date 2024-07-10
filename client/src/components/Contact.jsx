@@ -84,11 +84,6 @@ const Contact = () => {
     }
   };
 
-  // Debugging logs
-  console.log('m:', m);
-  console.log('T:', T);
-  console.log('m.get(T):', m.get(T));
-
   useEffect(() => {
     if (m.get(T)) {
       const entry = m.get(T);
