@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Section from "./Section";
 import { socials } from "../constants";
 import { ToastContainer, toast } from 'react-toastify';
@@ -14,14 +14,18 @@ const Contact = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   // Define m, T, and S
-  const m = new Map();
+  const [m, setM] = useState(new Map());
   const T = 'someKey';
   const S = 'someValue';
 
-  // Initialize m with some initial data
-  if (!m.has(T)) {
-    m.set(T, { toggle: null });
-  }
+  useEffect(() => {
+    // Initialize m with some initial data if not already set
+    if (!m.has(T)) {
+      const newM = new Map(m);
+      newM.set(T, { toggle: null });
+      setM(newM);
+    }
+  }, [T, m]);
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -85,11 +89,20 @@ const Contact = () => {
   console.log('T:', T);
   console.log('m.get(T):', m.get(T));
 
-  if (m.get(T)) {
-    m.get(T).toggle = S;
-  } else {
-    console.error('m.get(T) is undefined');
-  }
+  useEffect(() => {
+    if (m.get(T)) {
+      const entry = m.get(T);
+      if (entry && typeof entry === 'object') {
+        const newM = new Map(m);
+        newM.get(T).toggle = S;
+        setM(newM);
+      } else {
+        console.error('m.get(T) is not an object');
+      }
+    } else {
+      console.error('m.get(T) is undefined');
+    }
+  }, [m, T, S]);
 
   return (
     <Section id="contact" crosses={true}>
