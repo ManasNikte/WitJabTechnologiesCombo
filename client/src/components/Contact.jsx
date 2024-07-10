@@ -70,17 +70,6 @@ const Contact = () => {
     }
   };
 
-  console.log('m:', m);
-console.log('T:', T);
-console.log('m.get(T):', m.get(T));
-
-if (m.get(T)) {
-  m.get(T).toggle = S;
-} else {
-  console.error('m.get(T) is undefined');
-}
-
-
   return (
     <Section id="contact" crosses={true}>
       <div className="container mx-auto px-6 lg:px-20">
